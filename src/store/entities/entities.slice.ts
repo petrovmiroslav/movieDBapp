@@ -11,7 +11,7 @@ export const entitiesSlices = {
   [ENTITIES_NAMES_PLURAL.genres]: genresSlice,
   [ENTITIES_NAMES_PLURAL.images]: imagesSlice,
   [ENTITIES_NAMES_PLURAL.favorites]: favoritesSlice,
-}
+} as const
 
 // для сортировки имен слайсов по алфавиту
 export const sortedEntitiesReducersNamesList = Object.keys(
