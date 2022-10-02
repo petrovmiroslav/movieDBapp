@@ -1,5 +1,10 @@
 import React, {useMemo} from 'react'
-import {HERO_IMAGE_VISIBLE_HEIGHT, styles} from './Hero.styles'
+import {
+  HERO_IMAGE_MAX_SCALE_VALUE,
+  HERO_IMAGE_MIN_SCALE_VALUE,
+  HERO_IMAGE_VISIBLE_HEIGHT,
+  styles,
+} from './Hero.styles'
 import {Animated, Text, View} from 'react-native'
 import {shallowEqual, useSelector} from 'react-redux'
 import {selectMoviePrimitiveValuesById} from '../../../../store/entities/movies/movies.selectors'
@@ -101,7 +106,10 @@ const Hero = ({movieId, screenScrollYAnimValue}: HeroProps) => {
               -HERO_IMAGE_VISIBLE_HEIGHT,
               HERO_IMAGE_VISIBLE_HEIGHT / 2,
             ],
-            outputRange: [2, 1],
+            outputRange: [
+              HERO_IMAGE_MAX_SCALE_VALUE,
+              HERO_IMAGE_MIN_SCALE_VALUE,
+            ],
             extrapolate: 'clamp',
           }),
         },

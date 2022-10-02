@@ -31,6 +31,9 @@ const MovieCard = ({movieId, onPress, baseUrl, sizePart}: MovieCardProps) => {
 
   const onPressHandler = useCallback(() => onPress(movieId), [movieId, onPress])
 
+  // console.log('MovieCard RENDER', {
+  //   movieId,
+  // })
   return (
     <Button style={styles.container} onPress={onPressHandler}>
       <View style={styles.content}>

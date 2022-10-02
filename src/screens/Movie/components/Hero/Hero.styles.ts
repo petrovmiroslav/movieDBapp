@@ -1,6 +1,8 @@
 import {StyleSheet} from 'react-native'
 import {COLORS, SPACES, TYPOGRAPHY, WINDOW} from '../../../../constants/styles'
-export const HERO_IMAGE_VISIBLE_HEIGHT = WINDOW.height * 0.33
+export const HERO_IMAGE_VISIBLE_HEIGHT = WINDOW.height * 0.45
+export const HERO_IMAGE_MIN_SCALE_VALUE = 1
+export const HERO_IMAGE_MAX_SCALE_VALUE = 2
 export const styles = StyleSheet.create({
   hero: {
     paddingTop: HERO_IMAGE_VISIBLE_HEIGHT,
