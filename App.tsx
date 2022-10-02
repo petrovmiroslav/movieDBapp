@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import {Dispatch} from './src/store/store'
-import {fetchConfiguration} from './src/thunks/configuration.thunks'
-import {fetchFavorites} from './src/thunks/favorites.thunks'
+import {fetchConfiguration} from './src/store/configuration/configuration.thunks'
+import {fetchFavorites} from './src/store/entities/favorites/favorites.thunks'
 import TabNavigator from './src/navigation/TabNavigator'
 import {StatusBar} from 'react-native'
 

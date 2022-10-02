@@ -3,9 +3,9 @@ import {MovieId} from '../../../../store/entities/movies/movies.types'
 import {ENTITIES_IDS_NAMES} from '../../../../constants/entities'
 import {EntitiesIds} from '../../../../store/entities/entities.types'
 import {shallowEqual, useDispatch, useSelector} from 'react-redux'
-import {selectFavoriteById} from '../../../../selectors/favorites.selectors'
-import {selectMoviePrimitiveValuesById} from '../../../../selectors/movies.selectors'
-import {selectGenreNamesListByMovieId} from '../../../../selectors/genres.selectors'
+import {selectFavoriteById} from '../../../../store/entities/favorites/favorites.selectors'
+import {selectMoviePrimitiveValuesById} from '../../../../store/entities/movies/movies.selectors'
+import {selectGenreNamesListByMovieId} from '../../../../store/entities/genres/genres.selectors'
 import {FAVORITES_TYPES} from '../../../../store/entities/favorites/favorites.types'
 import {Dispatch, State} from '../../../../store/store'
 import {styles} from './FavoriteItem.styles'
@@ -20,11 +20,10 @@ import {getRoundedVote} from '../../../../utils/strings'
 import {useNavigation} from '@react-navigation/native'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {SCREENS, StackParamList} from '../../../../navigation/navigation.types'
-import {fetchMovie} from '../../../../thunks/movies.thunks'
+import {fetchMovie} from '../../../../store/entities/movies/movies.thunks'
 import MovieCardHorizontal, {
   MovieCardHorizontalProps,
 } from '../../../../components/MovieCardHorizontal/MovieCardHorizontal'
-import {styleSheetCompose} from '../../../../utils/styles'
 import GenresNamesMovieCardHorizontal from '../../../../components/texts/GenresNamesMovieCardHorizontal/GenresNamesMovieCardHorizontal'
 import TitleMovieCardHorizontal from '../../../../components/texts/TitleMovieCardHorizontal/TitleMovieCardHorizontal'
 import OriginalTitleMovieCardHorizontal from '../../../../components/texts/OriginalTitleMovieCardHorizontal/OriginalTitleMovieCardHorizontal'
@@ -101,7 +100,10 @@ const FavoriteItem = ({favoriteId, baseUrl, sizePart}: FavoriteItemProps) => {
     }
   }, [dispatch, entityId, type])
 
-  // console.log('FavoriteItem RENDER', {favoriteId})
+  // console.log('FavoriteItem RENDER', {
+  //   favoriteId,
+  // })
+
   return (
     <MovieCardHorizontal
       style={styles.button}
@@ -122,7 +124,7 @@ const FavoriteItem = ({favoriteId, baseUrl, sizePart}: FavoriteItemProps) => {
 
       <GenresNamesMovieCardHorizontal genresNamesList={genresNamesList} />
 
-      <View style={styleSheetCompose(styles.textRow, styles.bottomContent)}>
+      <View style={styles.textRow}>
         <Text style={styles.voteAverage}>
           {!!voteAverage && getRoundedVote(voteAverage)}{' '}
           <Text style={styles.duration}>{formattedDuration}</Text>

@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo, useRef} from 'react'
 import {shallowEqual, useDispatch, useSelector} from 'react-redux'
-import {selectFavoriteIdByTypeAndEntityId} from '../../selectors/favorites.selectors'
+import {selectFavoriteIdByTypeAndEntityId} from '../../store/entities/favorites/favorites.selectors'
 import {FAVORITES_TYPES} from '../../store/entities/favorites/favorites.types'
 import {Dispatch} from '../../store/store'
 import {MovieId} from '../../store/entities/movies/movies.types'
@@ -9,8 +9,7 @@ import {
   addToFavorites,
   fetchFavorites,
   removeFromFavorites,
-} from '../../thunks/favorites.thunks'
-import {PAGINATION_ACTION_TYPES} from '../../store/pagination/pagination.types'
+} from '../../store/entities/favorites/favorites.thunks'
 import {styles} from './FavoriteButton.styles'
 import Button from '../buttons/Button/Button'
 import Svg from '../Svg/Svg'
@@ -51,11 +50,7 @@ const FavoriteButton = ({movieId, style}: FavoriteButtonProps) => {
         : addToFavorites({type: FAVORITES_TYPES.MOVIE, entityId: movieId}),
     )
 
-    await dispatch(
-      fetchFavorites({
-        _actionType: PAGINATION_ACTION_TYPES.RE_FETCH,
-      }),
-    )
+    !favoriteId && (await dispatch(fetchFavorites()))
 
     isFavoritesPendingRef.current = false
   }, [dispatch, favoriteId, movieId])

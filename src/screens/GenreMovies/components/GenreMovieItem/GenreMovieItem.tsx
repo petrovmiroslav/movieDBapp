@@ -2,8 +2,8 @@ import React, {useCallback, useMemo} from 'react'
 import {ENTITIES_IDS_NAMES} from '../../../../constants/entities'
 import {EntitiesIds} from '../../../../store/entities/entities.types'
 import {shallowEqual, useSelector} from 'react-redux'
-import {selectMoviePrimitiveValuesById} from '../../../../selectors/movies.selectors'
-import {selectGenreNamesListByMovieId} from '../../../../selectors/genres.selectors'
+import {selectMoviePrimitiveValuesById} from '../../../../store/entities/movies/movies.selectors'
+import {selectGenreNamesListByMovieId} from '../../../../store/entities/genres/genres.selectors'
 import {getFormattedDateYear} from '../../../../utils/dates'
 import MovieCardHorizontal, {
   MovieCardHorizontalProps,

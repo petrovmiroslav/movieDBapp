@@ -11,21 +11,12 @@ import {
   setAsyncStorageData,
 } from '../../utils/asyncStorage'
 import {EntitiesActionPayload} from '../../store/entities/entities.types'
-import {
-  PAGINATION_QUERY_KEY_ROOTS,
-  PaginationActionPayload,
-} from '../../store/pagination/pagination.types'
-import {getPaginationQueryKey} from '../../store/pagination/pagination.slice'
-import {paginationMapper} from '../pagination/pagination.mappers'
 import {favoriteDtoMapper} from './favorites.mappers'
 import {getEntitiesListWithValidId, getRandomId} from '../../utils/store'
 
 export const fetchFavoritesAPi = ({
   type,
-  _actionType,
-}: FetchFavoritesApiParams = {}): Promise<
-  EntitiesActionPayload<'favorites'> & PaginationActionPayload<'favorites'>
-> =>
+}: FetchFavoritesApiParams = {}): Promise<EntitiesActionPayload<'favorites'>> =>
   getAsyncStorageData(ASYNC_STORAGE_KEYS.FAVORITES)
     .then((favorites): {data: FetchFavoritesApiDto} => {
       const favoritesList = (
@@ -47,21 +38,8 @@ export const fetchFavoritesAPi = ({
         body.results?.map(favoriteDtoMapper) ?? [],
       )
 
-      const queryKey = getPaginationQueryKey(
-        PAGINATION_QUERY_KEY_ROOTS.FAVORITES,
-        {favoritesType: type},
-      )
-
-      const favoritesPagination = paginationMapper(
-        favorites,
-        body,
-        queryKey,
-        _actionType,
-      )
-
       return {
         entities: {favorites},
-        pagination: {favorites: [favoritesPagination]},
       }
     })
 

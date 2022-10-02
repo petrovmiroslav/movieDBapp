@@ -88,3 +88,10 @@ export type FetchTopRatedMoviesApiParam = PaginationApiParams
 export type FetchTopRatedMoviesDto = {
   results?: MovieDto[]
 } & PaginationDto
+
+export type SearchMoviesApiParams = {
+  query: string
+} & PaginationApiParams
+export type SearchMoviesDto = {
+  results?: MovieDto[]
+} & PaginationDto

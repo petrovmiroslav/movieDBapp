@@ -8,6 +8,7 @@ import {getTabBarIcon} from '../components/TabBarIcon/TabBarIcon'
 import {ICONS_SVG} from '../constants/icons'
 import {getNestedTabNavigationStack} from './NestedTabNavigationStack'
 import GenreMoviesScreen from '../screens/GenreMovies/GenreMoviesScreen'
+import SearchScreen from '../screens/Search/SearchScreen'
 
 export type ScreenProps = Parameters<
   ReturnType<typeof createNativeStackNavigator>['Screen']
@@ -22,6 +23,11 @@ export const MainScreens: ScreenProps[] = [
   {
     name: SCREENS.MOVIE,
     component: MovieScreen,
+    options: {},
+  },
+  {
+    name: SCREENS.SEARCH,
+    component: SearchScreen,
     options: {},
   },
   {
@@ -47,6 +53,14 @@ export const TabsScreens: TabScreenProps[] = [
     options: {
       title: SCREENS.MAIN,
       tabBarIcon: getTabBarIcon({source: ICONS_SVG.main_filled}),
+    },
+  },
+  {
+    name: TABS.SEARCH,
+    component: getNestedTabNavigationStack(SCREENS.SEARCH),
+    options: {
+      title: SCREENS.SEARCH,
+      tabBarIcon: getTabBarIcon({source: ICONS_SVG.search}),
     },
   },
   {

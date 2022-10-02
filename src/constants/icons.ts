@@ -4,6 +4,7 @@ import Main_outlined from '../assets/icons/main_outline.svg'
 import Main_filled from '../assets/icons/main_filled.svg'
 import Favorites_outlined from '../assets/icons/favorites_outline.svg'
 import Favorites_filled from '../assets/icons/favorites_filled.svg'
+import Search from '../assets/icons/search.svg'
 
 export const ICONS_SVG = {
   logo: Logo,
@@ -12,4 +13,5 @@ export const ICONS_SVG = {
   main_filled: Main_filled,
   favorites_outlined: Favorites_outlined,
   favorites_filled: Favorites_filled,
+  search: Search,
 }

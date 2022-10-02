@@ -165,6 +165,7 @@ export const HIT_SLOPS = {
 export const POSTER_ASPECT_RATIO = 0.67
 export const BACKDROP_ASPECT_RATIO = 1.77
 
-export const DEFAULT_ACTIVE_OPACITY = 0.8
+export const ACTIVE_OPACITY_DEFAULT = 0.6
+export const ACTIVE_OPACITY_HARD = 0.2
 
 export const HEADER_MIN_HEIGHT = 56

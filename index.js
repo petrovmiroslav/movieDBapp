@@ -13,6 +13,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context'
 
 const RootApp = () => {
   return (
+    // <React.StrictMode>
     <SafeAreaProvider>
       <NavigationContainer>
         <Provider store={store}>
@@ -20,6 +21,7 @@ const RootApp = () => {
         </Provider>
       </NavigationContainer>
     </SafeAreaProvider>
+    // </React.StrictMode>
   )
 }
 

@@ -1,8 +1,8 @@
 import {ENTITIES_NAMES_PLURAL} from '../../../constants/entities'
 import {createEntityAdapter, createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {PaginationActionPayload} from '../../pagination/pagination.types'
 import {Favorite, FavoritesEntitiesPayload} from './favorites.types'
 import {createEntitiesReducer, createEntityMatcher} from '../../../utils/store'
+import {EntitiesIds} from '../entities.types'
 
 const ENTITY_SLICE_NAME = ENTITIES_NAMES_PLURAL.favorites
 
@@ -14,10 +14,14 @@ export const favoritesSlice = createSlice({
   reducers: {
     fetchFavoritesSuccess(
       _state,
-      _action: PayloadAction<
-        FavoritesEntitiesPayload & PaginationActionPayload<'favorites'>
-      >,
+      _action: PayloadAction<FavoritesEntitiesPayload>,
     ) {},
+    removeFromFavoritesSuccess(
+      state,
+      action: PayloadAction<EntitiesIds['favorite']>,
+    ) {
+      favoritesAdapter.removeOne(state, action.payload)
+    },
   },
   extraReducers: builder => {
     builder.addMatcher(
@@ -27,4 +31,5 @@ export const favoritesSlice = createSlice({
   },
 })
 
-export const {fetchFavoritesSuccess} = favoritesSlice.actions
+export const {fetchFavoritesSuccess, removeFromFavoritesSuccess} =
+  favoritesSlice.actions

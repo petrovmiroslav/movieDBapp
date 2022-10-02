@@ -3,25 +3,21 @@ import {
   DiscoverMovieApiParams,
   DiscoverMovieDto,
   FetchMovieApiParams,
-  MovieDto,
+  FetchPopularMoviesApiParam,
+  FetchPopularMoviesDto,
   FetchRecommendationsMoviesAPiParams,
   FetchRecommendationsMoviesDto,
   FetchSimilarMoviesAPiParams,
   FetchSimilarMoviesDto,
-  FetchPopularMoviesApiParam,
-  FetchPopularMoviesDto,
   FetchTopRatedMoviesApiParam,
   FetchTopRatedMoviesDto,
+  MovieDto,
+  SearchMoviesApiParams,
+  SearchMoviesDto,
 } from './movies.types'
 import {movieDtoMapper} from './movies.mappers'
 import {genreDtoMapper} from '../genres/genres.mappers'
-import {
-  PAGINATION_QUERY_KEY_ROOTS,
-  PaginationActionPayload,
-} from '../../store/pagination/pagination.types'
-import {getPaginationQueryKey} from '../../store/pagination/pagination.slice'
 import {EntitiesActionPayload} from '../../store/entities/entities.types'
-import {paginationMapper} from '../pagination/pagination.mappers'
 import {fetchImagesOfTheMovieApiDtoMapper} from '../images/images.mappers'
 import {
   getEntitiesListWithValidId,
@@ -62,37 +58,23 @@ export const fetchMovieApi = ({
 
 export const discoverMovieApi = (
   params: DiscoverMovieApiParams,
-): Promise<
-  EntitiesActionPayload<'movies'> & PaginationActionPayload<'movies'>
-> =>
+): Promise<EntitiesActionPayload<'movies'>> =>
   appAxiosInstance
-    .get<DiscoverMovieDto>('discover/movie', {params})
+    .get<DiscoverMovieDto>('/discover/movie', {params})
     .then(res => res.data)
     .then(body => {
-      const queryKey = getPaginationQueryKey(
-        PAGINATION_QUERY_KEY_ROOTS.DISCOVER_MOVIES,
-        params,
-      )
       const movies = (body.results ?? []).map(movieDtoMapper)
-      const moviesQueryKeyState = paginationMapper(
-        movies,
-        body,
-        queryKey,
-        params._actionType,
-      )
 
       return {
         entities: {movies},
-        pagination: {movies: [moviesQueryKeyState]},
       }
     })
 
 export const fetchRecommendationsMoviesAPi = ({
   movieId,
   page,
-  _actionType,
 }: FetchRecommendationsMoviesAPiParams): Promise<
-  EntitiesActionPayload<'movies'> & PaginationActionPayload<'movies'>
+  EntitiesActionPayload<'movies'>
 > =>
   appAxiosInstance
     .get<FetchRecommendationsMoviesDto>(`/movie/${movieId}/recommendations`, {
@@ -100,101 +82,64 @@ export const fetchRecommendationsMoviesAPi = ({
     })
     .then(res => res.data)
     .then(body => {
-      const queryKey = getPaginationQueryKey(
-        PAGINATION_QUERY_KEY_ROOTS.RECOMMENDATIONS_MOVIES,
-        {movieId},
-      )
       const movies = (body.results ?? []).map(movieDtoMapper)
-      const moviesQueryKeyState = paginationMapper(
-        movies,
-        body,
-        queryKey,
-        _actionType,
-      )
 
       return {
         entities: {movies},
-        pagination: {movies: [moviesQueryKeyState]},
       }
     })
 
 export const fetchSimilarMoviesAPi = ({
   movieId,
   page,
-  _actionType,
-}: FetchSimilarMoviesAPiParams): Promise<
-  EntitiesActionPayload<'movies'> & PaginationActionPayload<'movies'>
-> =>
+}: FetchSimilarMoviesAPiParams): Promise<EntitiesActionPayload<'movies'>> =>
   appAxiosInstance
     .get<FetchSimilarMoviesDto>(`/movie/${movieId}/similar`, {
       params: {page},
     })
     .then(res => res.data)
     .then(body => {
-      const queryKey = getPaginationQueryKey(
-        PAGINATION_QUERY_KEY_ROOTS.SIMILAR_MOVIES,
-        {movieId},
-      )
       const movies = (body.results ?? []).map(movieDtoMapper)
-      const moviesQueryKeyState = paginationMapper(
-        movies,
-        body,
-        queryKey,
-        _actionType,
-      )
 
       return {
         entities: {movies},
-        pagination: {movies: [moviesQueryKeyState]},
       }
     })
 
 export const fetchPopularMoviesApi = (
   params: FetchPopularMoviesApiParam,
-): Promise<
-  EntitiesActionPayload<'movies'> & PaginationActionPayload<'movies'>
-> =>
+): Promise<EntitiesActionPayload<'movies'>> =>
   appAxiosInstance
     .get<FetchPopularMoviesDto>('/movie/popular', {params})
     .then(res => res.data)
     .then(body => {
-      const queryKey = getPaginationQueryKey(PAGINATION_QUERY_KEY_ROOTS.POPULAR)
       const movies = (body.results ?? []).map(movieDtoMapper)
-      const moviesQueryKeyState = paginationMapper(
-        movies,
-        body,
-        queryKey,
-        params._actionType,
-      )
 
       return {
         entities: {movies},
-        pagination: {movies: [moviesQueryKeyState]},
       }
     })
 
 export const fetchTopRatedMoviesApi = (
   params: FetchTopRatedMoviesApiParam,
-): Promise<
-  EntitiesActionPayload<'movies'> & PaginationActionPayload<'movies'>
-> =>
+): Promise<EntitiesActionPayload<'movies'>> =>
   appAxiosInstance
     .get<FetchTopRatedMoviesDto>('/movie/top_rated', {params})
     .then(res => res.data)
     .then(body => {
-      const queryKey = getPaginationQueryKey(
-        PAGINATION_QUERY_KEY_ROOTS.TOP_RATED,
-      )
       const movies = (body.results ?? []).map(movieDtoMapper)
-      const moviesQueryKeyState = paginationMapper(
-        movies,
-        body,
-        queryKey,
-        params._actionType,
-      )
 
       return {
         entities: {movies},
-        pagination: {movies: [moviesQueryKeyState]},
       }
     })
+
+export const searchMoviesApi = (
+  params: SearchMoviesApiParams,
+): Promise<EntitiesActionPayload<'movies'>> =>
+  appAxiosInstance
+    .get<SearchMoviesDto>('/search/movie', {params})
+    .then(res => res.data)
+    .then(body => ({
+      entities: {movies: (body.results ?? []).map(movieDtoMapper)},
+    }))

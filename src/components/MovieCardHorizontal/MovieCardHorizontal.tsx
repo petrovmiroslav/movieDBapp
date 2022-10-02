@@ -6,15 +6,14 @@ import Button from '../buttons/Button/Button'
 import {styles} from './MovieCardHorizontal.styles'
 import {getImageUrl} from '../../utils/images'
 import {Movie} from '../../store/entities/movies/movies.types'
+import {UseImageUriReturnType} from '../../hooks/useImageUri'
 
 export type MovieCardHorizontalProps = {
   onPress: () => void
-  sizePart: string | undefined
-  baseUrl: string | undefined
   posterPath: Movie['posterPath']
   children: ReactNode
   style?: StyleProp<ViewStyle>
-}
+} & UseImageUriReturnType
 const MovieCardHorizontal = ({
   onPress,
   baseUrl,

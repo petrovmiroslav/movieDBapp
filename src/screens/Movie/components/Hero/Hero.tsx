@@ -1,14 +1,14 @@
 import React, {useMemo} from 'react'
-import {styles} from './Hero.styles'
-import {Animated, ImageProps, Text, View, ViewProps} from 'react-native'
+import {HERO_IMAGE_VISIBLE_HEIGHT, styles} from './Hero.styles'
+import {Animated, Text, View} from 'react-native'
 import {shallowEqual, useSelector} from 'react-redux'
-import {selectMoviePrimitiveValuesById} from '../../../../selectors/movies.selectors'
+import {selectMoviePrimitiveValuesById} from '../../../../store/entities/movies/movies.selectors'
 import {
   convertMinutesToDuration,
   formatDurationToString,
   getFormattedDateYear,
 } from '../../../../utils/dates'
-import {selectGenreNamesListByMovieId} from '../../../../selectors/genres.selectors'
+import {selectGenreNamesListByMovieId} from '../../../../store/entities/genres/genres.selectors'
 import {getImageUrl} from '../../../../utils/images'
 import {MovieId} from '../../../../store/entities/movies/movies.types'
 import FavoriteButton from '../../../../components/FavoriteButton/FavoriteButton'
@@ -20,14 +20,9 @@ import {WINDOW} from '../../../../constants/styles'
 
 export type HeroProps = {
   movieId: MovieId
-  heroImageContainerStyle?: Animated.AnimatedProps<ViewProps>['style']
-  heroImageStyle?: Animated.AnimatedProps<ImageProps>['style']
+  screenScrollYAnimValue: Animated.Value
 }
-const Hero = ({
-  movieId,
-  heroImageContainerStyle,
-  heroImageStyle,
-}: HeroProps) => {
+const Hero = ({movieId, screenScrollYAnimValue}: HeroProps) => {
   const {
     backdropPath,
     originalTitle,
@@ -75,6 +70,44 @@ const Hero = ({
   const backdropPathUri = useMemo(
     () => getImageUrl(baseUrl, sizePart, backdropPath),
     [backdropPath, baseUrl, sizePart],
+  )
+
+  /** При скролле поднимает heroImageContainer на значение скролла * 0.5*/
+  const heroImageContainerStyle = useMemo(
+    () => ({
+      transform: [
+        {
+          translateY: screenScrollYAnimValue.interpolate({
+            inputRange: [-HERO_IMAGE_VISIBLE_HEIGHT, HERO_IMAGE_VISIBLE_HEIGHT],
+            outputRange: [
+              -HERO_IMAGE_VISIBLE_HEIGHT / 2,
+              HERO_IMAGE_VISIBLE_HEIGHT / 2,
+            ],
+            extrapolate: 'clamp',
+          }),
+        },
+      ],
+    }),
+    [screenScrollYAnimValue],
+  )
+
+  /** При скролле увеличивает или сжимает heroImage*/
+  const heroImageStyle = useMemo(
+    () => ({
+      transform: [
+        {
+          scale: screenScrollYAnimValue.interpolate({
+            inputRange: [
+              -HERO_IMAGE_VISIBLE_HEIGHT,
+              HERO_IMAGE_VISIBLE_HEIGHT / 2,
+            ],
+            outputRange: [2, 1],
+            extrapolate: 'clamp',
+          }),
+        },
+      ],
+    }),
+    [screenScrollYAnimValue],
   )
 
   const _heroImageContainerStyle = useMemo(

@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   slider: {
     marginHorizontal: -SPACES.m,
   },
-  contentContainer: {
+  screenHeaderLayoutContentContainer: {
     paddingVertical: SPACES.s,
     paddingHorizontal: MOVIE_IMAGES_SLIDER_PADDING_HORIZONTAL,
   },

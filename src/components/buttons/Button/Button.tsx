@@ -1,13 +1,13 @@
 import React from 'react'
 import {TouchableOpacity, TouchableOpacityProps} from 'react-native'
-import {DEFAULT_ACTIVE_OPACITY} from '../../../constants/styles'
+import {ACTIVE_OPACITY_DEFAULT} from '../../../constants/styles'
 
 export type ButtonProps = {} & TouchableOpacityProps
 const Button = React.forwardRef<TouchableOpacity, ButtonProps>(
   ({...restTouchableOpacityProps}, ref) => (
     <TouchableOpacity
       ref={ref}
-      activeOpacity={DEFAULT_ACTIVE_OPACITY}
+      activeOpacity={ACTIVE_OPACITY_DEFAULT}
       {...restTouchableOpacityProps}
     />
   ),

@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   slider: {
     flexGrow: 0,
   },
-  contentContainer: {
+  screenHeaderLayoutContentContainer: {
     paddingHorizontal: SPACES.s,
   },
 })

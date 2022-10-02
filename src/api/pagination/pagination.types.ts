@@ -1,5 +1,3 @@
-import {PAGINATION_ACTION_TYPES} from '../../store/pagination/pagination.types'
-
 export type PaginationDto = {
   page?: number
   total_pages?: number
@@ -7,6 +5,5 @@ export type PaginationDto = {
 }
 
 export type PaginationApiParams = {
-  _actionType?: PAGINATION_ACTION_TYPES
   page?: number
 }

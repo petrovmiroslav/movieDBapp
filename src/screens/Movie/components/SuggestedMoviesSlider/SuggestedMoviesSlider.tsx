@@ -1,80 +1,63 @@
-import React, {useCallback, useMemo} from 'react'
+import React, {useCallback} from 'react'
 import MoviesSlider, {
   MoviesSliderProps,
 } from '../../../../components/MoviesSlider/MoviesSlider'
-import {shallowEqual, useDispatch, useSelector} from 'react-redux'
-import {selectMovieIdsListByQueryKey} from '../../../../selectors/movies.selectors'
-import {PAGINATION_QUERY_KEY_ROOTS} from '../../../../store/pagination/pagination.types'
-import {selectPaginationQueryKeyDataPrimitiveValues} from '../../../../selectors/pagination.selectors'
-import {getPaginationQueryKey} from '../../../../store/pagination/pagination.slice'
+import {useDispatch} from 'react-redux'
 import {Dispatch} from '../../../../store/store'
-import {FlatListProps} from 'react-native'
-import {
-  fetchRecommendationsMovies,
-  fetchSimilarMovies,
-} from '../../../../thunks/movies.thunks'
 import {MovieId} from '../../../../store/entities/movies/movies.types'
 import {styles as movieScreenStyles} from '../../MovieScreen.styles'
 import SectionHeader from '../../../../components/headers/SectionHeader/SectionHeader'
 import {styles} from './SuggestedMoviesSlider.styles'
+import {
+  useFetchDataList,
+  UseFetchDataListParams,
+} from '../../../../hooks/useFetchData'
+import {
+  EntitiesActionPayload,
+  EntitiesIds,
+} from '../../../../store/entities/entities.types'
+import {getEntityId} from '../../../../utils/store'
+import {ResponseError} from '../../../../api/api'
+import {
+  FetchRecommendationsMoviesAPiParams,
+  FetchSimilarMoviesAPiParams,
+} from '../../../../api/movies/movies.types'
 
 export type SuggestedMoviesSliderProps = {
   movieId: MovieId
-  suggestedType: Extract<
-    PAGINATION_QUERY_KEY_ROOTS,
-    | PAGINATION_QUERY_KEY_ROOTS.RECOMMENDATIONS_MOVIES
-    | PAGINATION_QUERY_KEY_ROOTS.SIMILAR_MOVIES
-  >
+  headerText: string
+  apiFunc: (
+    params: FetchRecommendationsMoviesAPiParams | FetchSimilarMoviesAPiParams,
+  ) => (
+    dispatch: Dispatch,
+  ) => Promise<EntitiesActionPayload<'movies'> | ResponseError | undefined>
 } & Pick<MoviesSliderProps, 'onMovieButtonPress'>
 const SuggestedMoviesSlider = ({
   movieId,
-  suggestedType,
   onMovieButtonPress,
+  apiFunc,
+  headerText,
 }: SuggestedMoviesSliderProps) => {
   const dispatch = useDispatch<Dispatch>()
 
-  const headerText = useMemo(() => {
-    if (suggestedType === PAGINATION_QUERY_KEY_ROOTS.RECOMMENDATIONS_MOVIES)
-      return 'Рекомендации'
-    return 'Похожие'
-  }, [suggestedType])
-
-  const paginationQueryKey = useMemo(
-    () =>
-      getPaginationQueryKey(suggestedType, {
-        movieId,
-      }),
-    [movieId, suggestedType],
+  const fetchMoviesFunc = useCallback<
+    UseFetchDataListParams<EntitiesIds['movie']>['fetchDataListFunc']
+  >(
+    async page => {
+      const res = await dispatch(apiFunc({movieId, page}))
+      const movies = res && 'entities' in res ? res.entities.movies : undefined
+      if (!movies) return
+      return movies.map(getEntityId)
+    },
+    [apiFunc, dispatch, movieId],
   )
 
-  const suggestedMoviesIdsList = useSelector(
-    selectMovieIdsListByQueryKey(paginationQueryKey),
-    shallowEqual,
-  )
-
-  const {page = 1, totalPages = 1} =
-    useSelector(
-      selectPaginationQueryKeyDataPrimitiveValues('movies', paginationQueryKey),
-      shallowEqual,
-    ) ?? {}
-
-  const onEndReachedHandler = useCallback<
-    NonNullable<
-      FlatListProps<
-        NonNullable<typeof suggestedMoviesIdsList>[number]
-      >['onEndReached']
-    >
-  >(() => {
-    if (totalPages <= page) return
-    dispatch(
-      (suggestedType === PAGINATION_QUERY_KEY_ROOTS.RECOMMENDATIONS_MOVIES
-        ? fetchRecommendationsMovies
-        : fetchSimilarMovies)({movieId, page: page + 1}),
-    )
-  }, [dispatch, movieId, page, suggestedType, totalPages])
+  const {dataList: moviesIdsList, loadMoreData} = useFetchDataList({
+    fetchDataListFunc: fetchMoviesFunc,
+  })
 
   //console.log('SuggestedMoviesSlider RENDER', {page, totalPages})
-  if (!suggestedMoviesIdsList?.length) return null
+  if (!moviesIdsList?.length) return null
   return (
     <>
       <SectionHeader style={movieScreenStyles.sectionHeader}>
@@ -82,9 +65,9 @@ const SuggestedMoviesSlider = ({
       </SectionHeader>
       <MoviesSlider
         style={styles.slider}
-        movieIdsList={suggestedMoviesIdsList}
+        movieIdsList={moviesIdsList}
         onMovieButtonPress={onMovieButtonPress}
-        onEndReached={onEndReachedHandler}
+        onEndReached={loadMoreData}
       />
     </>
   )

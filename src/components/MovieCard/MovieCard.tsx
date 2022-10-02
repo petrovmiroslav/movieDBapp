@@ -1,10 +1,9 @@
 import React, {useCallback, useMemo} from 'react'
 import {MovieId} from '../../store/entities/movies/movies.types'
 import {shallowEqual, useSelector} from 'react-redux'
-import {selectMoviePrimitiveValuesById} from '../../selectors/movies.selectors'
-import {selectGenreNamesListByMovieId} from '../../selectors/genres.selectors'
-import {useImageUri} from '../../hooks/useImageUri'
-import {IMAGE_TYPES} from '../../store/entities/images/images.types'
+import {selectMoviePrimitiveValuesById} from '../../store/entities/movies/movies.selectors'
+import {selectGenreNamesListByMovieId} from '../../store/entities/genres/genres.selectors'
+import {UseImageUriReturnType} from '../../hooks/useImageUri'
 import {getImageUrl} from '../../utils/images'
 import {Image, Text, View} from 'react-native'
 import {styles} from './MovieCard.styles'
@@ -15,8 +14,8 @@ import GenresNames from '../GenresNames/GenresNames'
 export type MovieCardProps = {
   movieId: MovieId
   onPress: (movieId: MovieId) => void
-}
-const MovieCard = ({movieId, onPress}: MovieCardProps) => {
+} & UseImageUriReturnType
+const MovieCard = ({movieId, onPress, baseUrl, sizePart}: MovieCardProps) => {
   const {posterPath, title, voteAverage} =
     useSelector(selectMoviePrimitiveValuesById(movieId), shallowEqual) ?? {}
 
@@ -25,9 +24,6 @@ const MovieCard = ({movieId, onPress}: MovieCardProps) => {
     shallowEqual,
   )
 
-  const {baseUrl, sizePart} = useImageUri({
-    imageType: IMAGE_TYPES.POSTERS,
-  })
   const posterPathUri = useMemo(
     () => getImageUrl(baseUrl, sizePart, posterPath),
     [baseUrl, posterPath, sizePart],

@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     flexGrow: 0,
     marginHorizontal: -SPACES.m,
   },
-  contentContainer: {
+  screenHeaderLayoutContentContainer: {
     paddingTop: SPACES.s,
     paddingBottom: SPACES.m,
     paddingHorizontal: SPACES.s,

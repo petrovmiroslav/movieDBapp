@@ -46,3 +46,5 @@ export const getPrimitiveValuesOnly = <Type extends object>(
   )
   return objCopy
 }
+
+export type Nullable<Type> = Type | null | undefined

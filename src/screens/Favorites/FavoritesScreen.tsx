@@ -1,8 +1,8 @@
 import {Animated, ListRenderItem} from 'react-native'
-import React, {useCallback, useMemo, useState} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import FavoriteItem from './components/FavoriteItem/FavoriteItem'
-import {selectFavoriteIdsListByType} from '../../selectors/favorites.selectors'
+import {selectFavoriteIdsListByType} from '../../store/entities/favorites/favorites.selectors'
 import {styles} from './FavoritesScreen.styles'
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
 import {
@@ -10,11 +10,11 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack'
 import {SCREENS, StackParamList} from '../../navigation/navigation.types'
-import {useScreenScrollY} from '../../hooks/useScreenScrollY'
-import {SetHeaderHeightContext} from '../../hooks/useHeaderHeight'
-import Header from '../../components/Header/Header'
+import ScreenHeader from '../../components/ScreenHeader/ScreenHeader'
 import {useImageUri} from '../../hooks/useImageUri'
 import {IMAGE_TYPES} from '../../store/entities/images/images.types'
+import {useDefaultScreenHeaderAnimation} from '../../hooks/useDefaultScreenHeaderAnimation'
+import {keyExtractorForId} from '../../utils/virtualizedLists'
 
 const screenOptions: NativeStackNavigationOptions = {
   headerBackVisible: false,
@@ -24,9 +24,12 @@ const FavoritesScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamList, SCREENS.MAIN>>()
   const route = useRoute<RouteProp<StackParamList, SCREENS.MAIN>>()
-
-  const [headerHeight, setHeaderHeight] = useState(0)
-  const {screenScrollYAnimValue, onScreenScrollHandler} = useScreenScrollY()
+  const {
+    screenHeaderHeight,
+    setScreenHeaderHeight,
+    screenHeaderShadowStyle,
+    onScreenScrollHandler,
+  } = useDefaultScreenHeaderAnimation()
 
   const favoritesIdsIdsList = useSelector(
     selectFavoriteIdsListByType(),
@@ -51,40 +54,30 @@ const FavoritesScreen = () => {
     [baseUrl, sizePart],
   )
 
-  const headerOpacityStyle = useMemo(
-    () => ({
-      opacity: screenScrollYAnimValue.interpolate({
-        inputRange: [0, headerHeight * 0.5],
-        outputRange: [0, 1],
-        extrapolate: 'clamp',
-      }),
-    }),
-    [headerHeight, screenScrollYAnimValue],
-  )
-
   const contentContainerStyle = useMemo(
     () => [
       styles.container,
-      {paddingTop: styles.container.paddingTop + headerHeight},
+      {paddingTop: styles.container.paddingTop + screenHeaderHeight},
     ],
-    [headerHeight],
+    [screenHeaderHeight],
   )
 
-  // console.log('FavoritesScreen RENDER')
+  // console.log('FavoritesScreen RENDER', {favoritesIdsIdsList})
   return (
     <>
-      <SetHeaderHeightContext.Provider value={setHeaderHeight}>
-        <Header
-          navigation={navigation}
-          route={route}
-          options={screenOptions}
-          shadowStyle={headerOpacityStyle}
-        />
-      </SetHeaderHeightContext.Provider>
+      <ScreenHeader
+        navigation={navigation}
+        route={route}
+        options={screenOptions}
+        headerLayoutSetHeaderHeight={setScreenHeaderHeight}
+        headerLayoutShadowStyle={screenHeaderShadowStyle}
+      />
+
       <Animated.FlatList
         contentContainerStyle={contentContainerStyle}
         showsVerticalScrollIndicator={false}
         data={favoritesIdsIdsList}
+        keyExtractor={keyExtractorForId}
         renderItem={renderFavoriteItem}
         onScroll={onScreenScrollHandler}
       />

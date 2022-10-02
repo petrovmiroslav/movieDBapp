@@ -2,7 +2,7 @@ import React, {useMemo} from 'react'
 import {getImageUrl} from '../../utils/images'
 import {Image, ImageStyle, StyleProp} from 'react-native'
 import {shallowEqual, useSelector} from 'react-redux'
-import {selectImageById} from '../../selectors/images.selectors'
+import {selectImageById} from '../../store/entities/images/images.selectors'
 import {ImageId} from '../../store/entities/images/images.types'
 
 export type ImageByUriProps = {

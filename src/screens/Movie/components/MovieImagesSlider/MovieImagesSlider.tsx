@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
-import {selectImagesIdsListByMovieId} from '../../../../selectors/images.selectors'
+import {selectImagesIdsListByMovieId} from '../../../../store/entities/images/images.selectors'
 import {IMAGE_TYPES} from '../../../../store/entities/images/images.types'
 import {MovieId} from '../../../../store/entities/movies/movies.types'
 import {FlatList, ListRenderItem, StyleProp, ViewStyle} from 'react-native'
@@ -11,6 +11,7 @@ import SectionHeader from '../../../../components/headers/SectionHeader/SectionH
 import {styles as movieScreenStyles} from '../../MovieScreen.styles'
 import MovieImageButton from '../MovieImageButton/MovieImageButton'
 import {styles as movieImageButtonStyles} from '../MovieImageButton/MovieImageButton.styles'
+import {keyExtractorForId} from '../../../../utils/virtualizedLists'
 
 export type MovieImagesSliderProps = {
   movieId: MovieId
@@ -64,9 +65,10 @@ const MovieImagesSlider = ({
       </SectionHeader>
       <FlatList
         style={styleSheetCompose(styles.slider, style)}
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={styles.screenHeaderLayoutContentContainer}
         data={imageIdsList}
         renderItem={renderImageItem}
+        keyExtractor={keyExtractorForId}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       />
