@@ -9,6 +9,7 @@ import {ICONS_SVG} from '../constants/icons'
 import {getNestedTabNavigationStack} from './NestedTabNavigationStack'
 import GenreMoviesScreen from '../screens/GenreMovies/GenreMoviesScreen'
 import SearchScreen from '../screens/Search/SearchScreen'
+import {SEARCH_TAB_TEST_ID} from '../constants/e2e'
 
 export type ScreenProps = Parameters<
   ReturnType<typeof createNativeStackNavigator>['Screen']
@@ -61,6 +62,7 @@ export const TabsScreens: TabScreenProps[] = [
     options: {
       title: SCREENS.SEARCH,
       tabBarIcon: getTabBarIcon({source: ICONS_SVG.search}),
+      tabBarTestID: SEARCH_TAB_TEST_ID,
     },
   },
   {

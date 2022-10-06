@@ -20,11 +20,15 @@ import {getRoundedVote} from '../../../../utils/strings'
 
 export type SearchMovieItemProps = {
   [ENTITIES_IDS_NAMES.movieId]: EntitiesIds['movie']
+  movieCardTestID?: string
+  movieTitleTestID?: string
 } & Pick<MovieCardHorizontalProps, 'baseUrl' | 'sizePart'>
 const SearchMovieItem = ({
   movieId,
   baseUrl,
   sizePart,
+  movieCardTestID,
+  movieTitleTestID,
 }: SearchMovieItemProps) => {
   const navigation =
     useNavigation<
@@ -55,8 +59,9 @@ const SearchMovieItem = ({
       onPress={onPressHandler}
       baseUrl={baseUrl}
       sizePart={sizePart}
-      posterPath={posterPath}>
-      <TitleMovieCardHorizontal title={title} />
+      posterPath={posterPath}
+      testID={movieCardTestID}>
+      <TitleMovieCardHorizontal title={title} testID={movieTitleTestID} />
 
       <View style={styles.textRow}>
         <OriginalTitleMovieCardHorizontal originalTitle={originalTitle} />

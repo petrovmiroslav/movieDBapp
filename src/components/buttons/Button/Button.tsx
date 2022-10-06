@@ -8,6 +8,7 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>(
     <TouchableOpacity
       ref={ref}
       activeOpacity={ACTIVE_OPACITY_DEFAULT}
+      accessibilityRole="button"
       {...restTouchableOpacityProps}
     />
   ),

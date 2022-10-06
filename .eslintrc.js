@@ -16,5 +16,9 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'warn',
       },
     },
+    {
+      files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+      extends: ['plugin:testing-library/react'],
+    },
   ],
 }

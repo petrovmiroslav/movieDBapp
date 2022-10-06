@@ -1,14 +1,14 @@
-import {MovieDto} from '../movies/movies.types'
-import {EntitiesActionPayload} from '../../store/entities/entities.types'
 import {appAxiosInstance} from '../api'
 import {genreDtoMapper} from './genres.mappers'
+import {PATH_GETTERS} from '../../constants/api'
+import {FetchGenresApiDto, FetchGenresApiResponse} from './genres.types'
 
-export const fetchGenresApi = (): Promise<EntitiesActionPayload<'genres'>> =>
+export const fetchGenresApi = (): Promise<FetchGenresApiResponse> =>
   appAxiosInstance
-    .get<Pick<MovieDto, 'genres'>>('/genre/movie/list')
+    .get<FetchGenresApiDto>(PATH_GETTERS.fetchGenresApiPath)
     .then(res => res.data)
     .then(body => ({
       entities: {
-        genres: (body.genres ?? []).map(genreDtoMapper),
+        genres: (body?.genres ?? []).map(genreDtoMapper),
       },
     }))

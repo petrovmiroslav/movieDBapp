@@ -8,14 +8,25 @@ import {getImageUrl} from '../../utils/images'
 import {Image, Text, View} from 'react-native'
 import {styles} from './MovieCard.styles'
 import {getRoundedVote} from '../../utils/strings'
-import Button from '../buttons/Button/Button'
+import Button, {ButtonProps} from '../buttons/Button/Button'
 import GenresNames from '../GenresNames/GenresNames'
+
+export const MOVIE_CARD_ROLE = 'imagebutton'
 
 export type MovieCardProps = {
   movieId: MovieId
   onPress: (movieId: MovieId) => void
-} & UseImageUriReturnType
-const MovieCard = ({movieId, onPress, baseUrl, sizePart}: MovieCardProps) => {
+  movieTitleTestID?: string
+} & UseImageUriReturnType &
+  Pick<ButtonProps, 'testID'>
+const MovieCard = ({
+  movieId,
+  onPress,
+  baseUrl,
+  sizePart,
+  testID,
+  movieTitleTestID,
+}: MovieCardProps) => {
   const {posterPath, title, voteAverage} =
     useSelector(selectMoviePrimitiveValuesById(movieId), shallowEqual) ?? {}
 
@@ -35,13 +46,16 @@ const MovieCard = ({movieId, onPress, baseUrl, sizePart}: MovieCardProps) => {
   //   movieId,
   // })
   return (
-    <Button style={styles.container} onPress={onPressHandler}>
-      <View style={styles.content}>
+    <Button
+      accessibilityRole={MOVIE_CARD_ROLE}
+      style={styles.container}
+      onPress={onPressHandler}>
+      <View style={styles.content} testID={testID}>
         <View style={styles.posterContainer}>
           <Image style={styles.poster} source={{uri: posterPathUri}} />
         </View>
 
-        <Text style={styles.title} numberOfLines={2}>
+        <Text style={styles.title} numberOfLines={2} testID={movieTitleTestID}>
           {title}
         </Text>
 

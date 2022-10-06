@@ -22,6 +22,10 @@ import {
   UseFetchDataListParams,
 } from '../../hooks/useFetchData'
 import {keyExtractorForId} from '../../utils/virtualizedLists'
+import {
+  SEARCH_MOVIE_CARD_TEST_ID,
+  SEARCH_MOVIE_CARD_TITLE_TEST_ID,
+} from '../../constants/e2e'
 
 const SearchScreen = () => {
   const dispatch = useDispatch<Dispatch>()
@@ -68,12 +72,14 @@ const SearchScreen = () => {
   const renderSearchMovieItem = useCallback<
     ListRenderItem<NonNullable<typeof searchMoviesIdsList>[number]>
   >(
-    ({item}) => (
+    ({item, index}) => (
       <SearchMovieItem
         key={item}
         movieId={item}
         baseUrl={baseUrl}
         sizePart={sizePart}
+        movieCardTestID={!index ? SEARCH_MOVIE_CARD_TEST_ID : undefined}
+        movieTitleTestID={!index ? SEARCH_MOVIE_CARD_TITLE_TEST_ID : undefined}
       />
     ),
     [baseUrl, sizePart],

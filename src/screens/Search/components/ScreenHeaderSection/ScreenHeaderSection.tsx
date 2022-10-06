@@ -19,6 +19,7 @@ import {ICONS_SVG} from '../../../../constants/icons'
 import Button from '../../../../components/buttons/Button/Button'
 import {ACTIVE_OPACITY_HARD} from '../../../../constants/styles'
 import {styleSheetCompose} from '../../../../utils/styles'
+import {SEARCH_INPUT_TEST_ID} from '../../../../constants/e2e'
 
 if (
   Platform.OS === 'android' &&
@@ -117,6 +118,8 @@ const ScreenHeaderSection = ({
           placeholder="Поиск"
           onFocus={onSearchInputFocusHandler}
           onBlur={onSearchInputBlurHandler}
+          testID={SEARCH_INPUT_TEST_ID}
+          accessibilityLabel="Поиск"
         />
         <Svg
           style={styles.icon}

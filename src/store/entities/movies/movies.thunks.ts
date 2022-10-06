@@ -2,8 +2,8 @@ import {
   discoverMovieApi,
   fetchMovieApi,
   fetchPopularMoviesApi,
-  fetchRecommendationsMoviesAPi,
-  fetchSimilarMoviesAPi,
+  fetchRecommendationsMoviesApi,
+  fetchSimilarMoviesApi,
   fetchTopRatedMoviesApi,
   searchMoviesApi,
 } from '../../../api/movies/movies.requests'
@@ -21,12 +21,12 @@ import {
   DiscoverMovieApiParams,
   FetchMovieApiParams,
   FetchPopularMoviesApiParam,
-  FetchRecommendationsMoviesAPiParams,
-  FetchSimilarMoviesAPiParams,
+  FetchRecommendationsMoviesApiParams,
+  FetchSimilarMoviesApiParams,
   FetchTopRatedMoviesApiParam,
   SearchMoviesApiParams,
 } from '../../../api/movies/movies.types'
-import {ResponseError} from '../../../api/api'
+import {ResponseError} from '../../../api/api.types'
 
 export const fetchMovie =
   (params: FetchMovieApiParams) => async (dispatch: Dispatch) => {
@@ -58,10 +58,10 @@ export const discoverMovie =
   }
 
 export const fetchRecommendationsMovies =
-  (params: FetchRecommendationsMoviesAPiParams) =>
+  (params: FetchRecommendationsMoviesApiParams) =>
   async (dispatch: Dispatch) => {
     try {
-      const actionPayload = await fetchRecommendationsMoviesAPi(params)
+      const actionPayload = await fetchRecommendationsMoviesApi(params)
 
       actionPayload &&
         dispatch(fetchRecommendationsMoviesSuccess(actionPayload))
@@ -75,9 +75,9 @@ export const fetchRecommendationsMovies =
   }
 
 export const fetchSimilarMovies =
-  (params: FetchSimilarMoviesAPiParams) => async (dispatch: Dispatch) => {
+  (params: FetchSimilarMoviesApiParams) => async (dispatch: Dispatch) => {
     try {
-      const actionPayload = await fetchSimilarMoviesAPi(params)
+      const actionPayload = await fetchSimilarMoviesApi(params)
 
       actionPayload && dispatch(fetchSimilarMoviesSuccess(actionPayload))
       return actionPayload

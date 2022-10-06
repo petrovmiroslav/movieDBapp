@@ -1,7 +1,7 @@
 import {Dispatch} from '../store'
-import {ResponseError} from '../../api/api'
 import {fetchConfigurationApi} from '../../api/configuration/configuration.requests'
 import {loadConfigurationSuccess} from './configuration.slice'
+import {ResponseError} from '../../api/api.types'
 
 export const fetchConfiguration = async (dispatch: Dispatch) => {
   try {

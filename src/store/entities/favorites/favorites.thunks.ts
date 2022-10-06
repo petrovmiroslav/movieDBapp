@@ -1,5 +1,4 @@
 import {Dispatch} from '../../store'
-import {ResponseError} from '../../../api/api'
 import {
   AddToFavoritesApiParams,
   FetchFavoritesApiParams,
@@ -14,6 +13,7 @@ import {
   fetchFavoritesAPi,
   removeFromFavoritesApi,
 } from '../../../api/favorites/favorites.requests'
+import {ResponseError} from '../../../api/api.types'
 
 export const fetchFavorites =
   (params?: FetchFavoritesApiParams) => async (dispatch: Dispatch) => {

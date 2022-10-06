@@ -49,7 +49,7 @@ const MovieScreen = () => {
     )
   }, [dispatch, movieId])
 
-  // console.log('MovieScreen RENDER', {})
+  // console.log('MovieScreen RENDER', {movieId, title})
   return (
     <>
       <ScreenHeaderSection
@@ -72,8 +72,14 @@ const MovieScreen = () => {
           <View style={styles.bottomSheet__handle} />
 
           <View style={styles.bottomSheet__content}>
-            {!!tagline && <Text style={styles.tagline}>{tagline}</Text>}
-            <Text style={styles.overview}>{overview}</Text>
+            {!!tagline && (
+              <Text style={styles.tagline} selectable={true}>
+                {tagline}
+              </Text>
+            )}
+            <Text style={styles.overview} selectable={true}>
+              {overview}
+            </Text>
 
             {!isTheFirstRender && (
               <>

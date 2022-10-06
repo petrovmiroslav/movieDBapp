@@ -22,6 +22,9 @@ import {useImageUri} from '../../../../hooks/useImageUri'
 import {IMAGE_TYPES} from '../../../../store/entities/images/images.types'
 import {getRoundedVote} from '../../../../utils/strings'
 import {WINDOW} from '../../../../constants/styles'
+import {MOVIE_SCREEN_HEADER_TEST_ID} from '../../../../constants/e2e'
+
+export const MOVIE_TITLE_ROLE = 'header'
 
 export type HeroProps = {
   movieId: MovieId
@@ -141,7 +144,14 @@ const Hero = ({movieId, screenScrollYAnimValue}: HeroProps) => {
 
       <View style={styles.hero__content}>
         <View style={styles.hero__backdrop} />
-        <Text style={styles.hero__header}>{title}</Text>
+        <Text
+          style={styles.hero__header}
+          testID={MOVIE_SCREEN_HEADER_TEST_ID}
+          accessibilityRole={MOVIE_TITLE_ROLE}
+          accessibilityLabel={title}
+          selectable={true}>
+          {title}
+        </Text>
         <Text style={styles.hero__text}>
           {VoteAverage}
           {originalTitle}
@@ -150,7 +160,9 @@ const Hero = ({movieId, screenScrollYAnimValue}: HeroProps) => {
           {releaseDateFormatted && releaseDateFormatted + ', '}
           {formattedDuration}
         </Text>
-        <Text style={styles.hero__text}>{genresNames}</Text>
+        <Text style={styles.hero__text} selectable={true}>
+          {genresNames}
+        </Text>
 
         <FavoriteButton movieId={movieId} style={styles.hero__favoriteButton} />
       </View>

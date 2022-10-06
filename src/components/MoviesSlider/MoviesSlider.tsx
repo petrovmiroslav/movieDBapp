@@ -12,12 +12,16 @@ import {IMAGE_TYPES} from '../../store/entities/images/images.types'
 export type MoviesSliderProps = {
   movieIdsList: MovieId[] | undefined
   onMovieButtonPress: MovieCardProps['onPress']
-} & Omit<FlatListProps<MovieId>, 'data' | 'renderItem'>
+  movieCardTestID?: string
+} & Omit<FlatListProps<MovieId>, 'data' | 'renderItem'> &
+  Pick<MovieCardProps, 'movieTitleTestID'>
 const MoviesSlider = ({
   movieIdsList,
   onMovieButtonPress,
   style,
   contentContainerStyle,
+  movieCardTestID,
+  movieTitleTestID,
   ...restFlatListProps
 }: MoviesSliderProps) => {
   const {baseUrl, sizePart} = useImageUri({
@@ -27,16 +31,18 @@ const MoviesSlider = ({
   const renderMovieItem = useCallback<
     ListRenderItem<NonNullable<typeof movieIdsList>[number]>
   >(
-    ({item}) => (
+    ({item, index}) => (
       <MovieCard
         key={item}
         movieId={item}
         onPress={onMovieButtonPress}
         baseUrl={baseUrl}
         sizePart={sizePart}
+        testID={!index ? movieCardTestID : undefined}
+        movieTitleTestID={!index ? movieTitleTestID : undefined}
       />
     ),
-    [baseUrl, onMovieButtonPress, sizePart],
+    [baseUrl, movieCardTestID, movieTitleTestID, onMovieButtonPress, sizePart],
   )
 
   return (

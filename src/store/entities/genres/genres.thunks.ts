@@ -1,7 +1,7 @@
 import {Dispatch} from '../../store'
-import {ResponseError} from '../../../api/api'
 import {fetchGenresApi} from '../../../api/genres/genres.requests'
 import {fetchGenresSuccess} from './genres.slice'
+import {ResponseError} from '../../../api/api.types'
 
 export const fetchGenres = () => async (dispatch: Dispatch) => {
   try {

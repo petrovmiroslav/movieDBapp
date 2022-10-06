@@ -1,38 +1,43 @@
-import {appAxiosInstance, DEFAULT_INCLUDE_LANGUAGE_PARAM} from '../api'
+import {appAxiosInstance} from '../api'
 import {
+  DiscoverMovieApiDto,
   DiscoverMovieApiParams,
-  DiscoverMovieDto,
+  DiscoverMovieApiResponse,
+  FetchMovieApiDto,
   FetchMovieApiParams,
+  FetchMovieApiResponse,
+  FetchPopularMoviesApiDto,
   FetchPopularMoviesApiParam,
-  FetchPopularMoviesDto,
-  FetchRecommendationsMoviesAPiParams,
-  FetchRecommendationsMoviesDto,
-  FetchSimilarMoviesAPiParams,
-  FetchSimilarMoviesDto,
+  FetchPopularMoviesApiResponse,
+  FetchRecommendationsMoviesApiDto,
+  FetchRecommendationsMoviesApiParams,
+  FetchRecommendationsMoviesApiResponse,
+  FetchSimilarMoviesApiDto,
+  FetchSimilarMoviesApiParams,
+  FetchSimilarMoviesApiResponse,
+  FetchTopRatedMoviesApiDto,
   FetchTopRatedMoviesApiParam,
-  FetchTopRatedMoviesDto,
-  MovieDto,
+  FetchTopRatedMoviesApiResponse,
+  SearchMoviesApiDto,
   SearchMoviesApiParams,
-  SearchMoviesDto,
+  SearchMoviesApiResponse,
 } from './movies.types'
 import {movieDtoMapper} from './movies.mappers'
 import {genreDtoMapper} from '../genres/genres.mappers'
-import {EntitiesActionPayload} from '../../store/entities/entities.types'
 import {fetchImagesOfTheMovieApiDtoMapper} from '../images/images.mappers'
 import {
   getEntitiesListWithValidId,
   getEntityId,
   getValidEntitiesIdsList,
 } from '../../utils/store'
+import {DEFAULT_INCLUDE_LANGUAGE_PARAM, PATH_GETTERS} from '../../constants/api'
 
 export const fetchMovieApi = ({
   movieId,
   includes,
-}: FetchMovieApiParams): Promise<
-  EntitiesActionPayload<'movies' | 'genres' | 'images'>
-> =>
+}: FetchMovieApiParams): Promise<FetchMovieApiResponse> =>
   appAxiosInstance
-    .get<MovieDto>(`/movie/${movieId}`, {
+    .get<FetchMovieApiDto>(PATH_GETTERS.getFetchMovieApiPath(movieId), {
       params: {
         append_to_response: includes?.join(),
         include_image_language: includes && DEFAULT_INCLUDE_LANGUAGE_PARAM,
@@ -58,9 +63,31 @@ export const fetchMovieApi = ({
 
 export const discoverMovieApi = (
   params: DiscoverMovieApiParams,
-): Promise<EntitiesActionPayload<'movies'>> =>
+): Promise<DiscoverMovieApiResponse> =>
   appAxiosInstance
-    .get<DiscoverMovieDto>('/discover/movie', {params})
+    .get<DiscoverMovieApiDto>(PATH_GETTERS.discoverMovieApi, {params})
+    .then(res => res.data)
+    .then(body => {
+      const movies = getEntitiesListWithValidId(
+        (body.results ?? []).map(movieDtoMapper),
+      )
+
+      return {
+        entities: {movies},
+      }
+    })
+
+export const fetchRecommendationsMoviesApi = ({
+  movieId,
+  page,
+}: FetchRecommendationsMoviesApiParams): Promise<FetchRecommendationsMoviesApiResponse> =>
+  appAxiosInstance
+    .get<FetchRecommendationsMoviesApiDto>(
+      PATH_GETTERS.getFetchRecommendationsMoviesAPi(movieId),
+      {
+        params: {page},
+      },
+    )
     .then(res => res.data)
     .then(body => {
       const movies = (body.results ?? []).map(movieDtoMapper)
@@ -70,33 +97,17 @@ export const discoverMovieApi = (
       }
     })
 
-export const fetchRecommendationsMoviesAPi = ({
+export const fetchSimilarMoviesApi = ({
   movieId,
   page,
-}: FetchRecommendationsMoviesAPiParams): Promise<
-  EntitiesActionPayload<'movies'>
-> =>
+}: FetchSimilarMoviesApiParams): Promise<FetchSimilarMoviesApiResponse> =>
   appAxiosInstance
-    .get<FetchRecommendationsMoviesDto>(`/movie/${movieId}/recommendations`, {
-      params: {page},
-    })
-    .then(res => res.data)
-    .then(body => {
-      const movies = (body.results ?? []).map(movieDtoMapper)
-
-      return {
-        entities: {movies},
-      }
-    })
-
-export const fetchSimilarMoviesAPi = ({
-  movieId,
-  page,
-}: FetchSimilarMoviesAPiParams): Promise<EntitiesActionPayload<'movies'>> =>
-  appAxiosInstance
-    .get<FetchSimilarMoviesDto>(`/movie/${movieId}/similar`, {
-      params: {page},
-    })
+    .get<FetchSimilarMoviesApiDto>(
+      PATH_GETTERS.getFetchSimilarMoviesApi(movieId),
+      {
+        params: {page},
+      },
+    )
     .then(res => res.data)
     .then(body => {
       const movies = (body.results ?? []).map(movieDtoMapper)
@@ -108,9 +119,9 @@ export const fetchSimilarMoviesAPi = ({
 
 export const fetchPopularMoviesApi = (
   params: FetchPopularMoviesApiParam,
-): Promise<EntitiesActionPayload<'movies'>> =>
+): Promise<FetchPopularMoviesApiResponse> =>
   appAxiosInstance
-    .get<FetchPopularMoviesDto>('/movie/popular', {params})
+    .get<FetchPopularMoviesApiDto>(PATH_GETTERS.fetchPopularMoviesApi, {params})
     .then(res => res.data)
     .then(body => {
       const movies = (body.results ?? []).map(movieDtoMapper)
@@ -122,9 +133,11 @@ export const fetchPopularMoviesApi = (
 
 export const fetchTopRatedMoviesApi = (
   params: FetchTopRatedMoviesApiParam,
-): Promise<EntitiesActionPayload<'movies'>> =>
+): Promise<FetchTopRatedMoviesApiResponse> =>
   appAxiosInstance
-    .get<FetchTopRatedMoviesDto>('/movie/top_rated', {params})
+    .get<FetchTopRatedMoviesApiDto>(PATH_GETTERS.fetchTopRatedMoviesApi, {
+      params,
+    })
     .then(res => res.data)
     .then(body => {
       const movies = (body.results ?? []).map(movieDtoMapper)
@@ -136,9 +149,9 @@ export const fetchTopRatedMoviesApi = (
 
 export const searchMoviesApi = (
   params: SearchMoviesApiParams,
-): Promise<EntitiesActionPayload<'movies'>> =>
+): Promise<SearchMoviesApiResponse> =>
   appAxiosInstance
-    .get<SearchMoviesDto>('/search/movie', {params})
+    .get<SearchMoviesApiDto>(PATH_GETTERS.searchMoviesApi, {params})
     .then(res => res.data)
     .then(body => ({
       entities: {movies: (body.results ?? []).map(movieDtoMapper)},

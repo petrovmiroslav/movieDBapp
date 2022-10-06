@@ -3,10 +3,11 @@ import {
   PaginationApiParams,
   PaginationDto,
 } from '../pagination/pagination.types'
-import {SORT_BY_PARAM} from '../api'
 import {ENTITIES_IDS_NAMES} from '../../constants/entities'
 import {MovieId} from '../../store/entities/movies/movies.types'
 import {FetchImagesOfTheMovieApiDto} from '../images/images.types'
+import {SORT_BY_PARAM_VALUES} from '../../constants/api'
+import {EntitiesActionPayload} from '../../store/entities/entities.types'
 
 export type MovieDto = {
   adult?: boolean
@@ -42,6 +43,10 @@ export type FetchMovieApiParams = {
   [ENTITIES_IDS_NAMES.movieId]: MovieId
   includes?: APPEND_TO_RESPONSE[]
 }
+export type FetchMovieApiDto = MovieDto
+export type FetchMovieApiResponse = EntitiesActionPayload<
+  'movies' | 'genres' | 'images'
+>
 
 export enum SORT_BY_PARAM_DISCOVER_MOVIES {
   RELEASE_DATE_ASC = 'release_date.asc',
@@ -57,7 +62,7 @@ export enum SORT_BY_PARAM_DISCOVER_MOVIES {
 }
 
 export type DiscoverMovieApiParams = {
-  sort_by?: SORT_BY_PARAM & SORT_BY_PARAM_DISCOVER_MOVIES
+  sort_by?: SORT_BY_PARAM_VALUES & SORT_BY_PARAM_DISCOVER_MOVIES
   'vote_count.gte'?: number
   'vote_count.lte'?: number
   'vote_average.gte'?: number
@@ -65,33 +70,40 @@ export type DiscoverMovieApiParams = {
   with_genres?: string
   without_genres?: string
 } & PaginationApiParams
-export type DiscoverMovieDto = {
+export type DiscoverMovieApiDto = {
   results?: MovieDto[]
 } & PaginationDto
+export type DiscoverMovieApiResponse = EntitiesActionPayload<'movies'>
 
-export type FetchRecommendationsMoviesAPiParams = {
+export type FetchRecommendationsMoviesApiParams = {
   [ENTITIES_IDS_NAMES.movieId]: MovieId
 } & PaginationApiParams
-export type FetchRecommendationsMoviesDto = {
+export type FetchRecommendationsMoviesApiDto = {
   results?: MovieDto[]
 } & PaginationDto
+export type FetchRecommendationsMoviesApiResponse =
+  EntitiesActionPayload<'movies'>
 
-export type FetchSimilarMoviesAPiParams = FetchRecommendationsMoviesAPiParams
-export type FetchSimilarMoviesDto = FetchRecommendationsMoviesDto
+export type FetchSimilarMoviesApiParams = FetchRecommendationsMoviesApiParams
+export type FetchSimilarMoviesApiDto = FetchRecommendationsMoviesApiDto
+export type FetchSimilarMoviesApiResponse = EntitiesActionPayload<'movies'>
 
 export type FetchPopularMoviesApiParam = PaginationApiParams
-export type FetchPopularMoviesDto = {
+export type FetchPopularMoviesApiDto = {
   results?: MovieDto[]
 } & PaginationDto
+export type FetchPopularMoviesApiResponse = EntitiesActionPayload<'movies'>
 
 export type FetchTopRatedMoviesApiParam = PaginationApiParams
-export type FetchTopRatedMoviesDto = {
+export type FetchTopRatedMoviesApiDto = {
   results?: MovieDto[]
 } & PaginationDto
+export type FetchTopRatedMoviesApiResponse = EntitiesActionPayload<'movies'>
 
 export type SearchMoviesApiParams = {
   query: string
 } & PaginationApiParams
-export type SearchMoviesDto = {
+export type SearchMoviesApiDto = {
   results?: MovieDto[]
 } & PaginationDto
+export type SearchMoviesApiResponse = EntitiesActionPayload<'movies'>

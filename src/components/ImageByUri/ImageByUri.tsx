@@ -5,6 +5,9 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {selectImageById} from '../../store/entities/images/images.selectors'
 import {ImageId} from '../../store/entities/images/images.types'
 
+export const getImageByUriTestId = (imageId: ImageByUriProps['imageId']) =>
+  ImageByUri + imageId
+
 export type ImageByUriProps = {
   imageId: ImageId
   baseUrl: string | undefined
@@ -20,6 +23,8 @@ const ImageByUri = ({imageId, baseUrl, sizePart, style}: ImageByUriProps) => {
   )
 
   // console.log('ImageByUri RENDER', {imageId})
-  return <Image source={{uri}} style={style} />
+  return (
+    <Image testID={getImageByUriTestId(imageId)} source={{uri}} style={style} />
+  )
 }
 export default React.memo(ImageByUri)

@@ -17,17 +17,17 @@ import {
   EntitiesIds,
 } from '../../../../store/entities/entities.types'
 import {getEntityId} from '../../../../utils/store'
-import {ResponseError} from '../../../../api/api'
 import {
-  FetchRecommendationsMoviesAPiParams,
-  FetchSimilarMoviesAPiParams,
+  FetchRecommendationsMoviesApiParams,
+  FetchSimilarMoviesApiParams,
 } from '../../../../api/movies/movies.types'
+import {ResponseError} from '../../../../api/api.types'
 
 export type SuggestedMoviesSliderProps = {
   movieId: MovieId
   headerText: string
   apiFunc: (
-    params: FetchRecommendationsMoviesAPiParams | FetchSimilarMoviesAPiParams,
+    params: FetchRecommendationsMoviesApiParams | FetchSimilarMoviesApiParams,
   ) => (
     dispatch: Dispatch,
   ) => Promise<EntitiesActionPayload<'movies'> | ResponseError | undefined>

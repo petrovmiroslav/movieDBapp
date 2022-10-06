@@ -16,7 +16,7 @@ import {
 } from '../../../../store/entities/entities.types'
 import {getEntityId} from '../../../../utils/store'
 import {PaginationApiParams} from '../../../../api/pagination/pagination.types'
-import {ResponseError} from '../../../../api/api'
+import {ResponseError} from '../../../../api/api.types'
 
 export type ChartMoviesSliderProps = {
   headerText: string
@@ -25,11 +25,16 @@ export type ChartMoviesSliderProps = {
   ) => (
     dispatch: Dispatch,
   ) => Promise<EntitiesActionPayload<'movies'> | ResponseError | undefined>
-} & Pick<MoviesSliderProps, 'onMovieButtonPress'>
+} & Pick<
+  MoviesSliderProps,
+  'onMovieButtonPress' | 'movieCardTestID' | 'movieTitleTestID'
+>
 const ChartMoviesSlider = ({
   headerText,
   apiFunc,
   onMovieButtonPress,
+  movieCardTestID,
+  movieTitleTestID,
 }: ChartMoviesSliderProps) => {
   const dispatch = useDispatch<Dispatch>()
 
@@ -59,6 +64,8 @@ const ChartMoviesSlider = ({
         movieIdsList={moviesIdsList}
         onEndReached={loadMoreData}
         onMovieButtonPress={onMovieButtonPress}
+        movieCardTestID={movieCardTestID}
+        movieTitleTestID={movieTitleTestID}
       />
     </>
   )

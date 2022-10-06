@@ -20,6 +20,10 @@ import {SCREENS, StackParamList} from '../../navigation/navigation.types'
 import ScreenHeader from '../../components/ScreenHeader/ScreenHeader'
 import {useIsTheFirstRender} from '../../hooks/useIsTheFirstRender'
 import {useDefaultScreenHeaderAnimation} from '../../hooks/useDefaultScreenHeaderAnimation'
+import {
+  POPULAR_MOVIE_CARD_TEST_ID,
+  POPULAR_MOVIE_CARD_TITLE_TEST_ID,
+} from '../../constants/e2e'
 
 const screenOptions: NativeStackNavigationOptions = {
   headerBackVisible: false,
@@ -72,6 +76,8 @@ const MainScreen = () => {
             headerText="Популярные"
             onMovieButtonPress={onChartMovieButtonPress}
             apiFunc={fetchPopularMovies}
+            movieCardTestID={POPULAR_MOVIE_CARD_TEST_ID}
+            movieTitleTestID={POPULAR_MOVIE_CARD_TITLE_TEST_ID}
           />
           <ChartMoviesSlider
             headerText="Топ рейтинг"

@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
-import {Dispatch} from './src/store/store'
+import {Provider, useDispatch} from 'react-redux'
+import {Dispatch, store} from './src/store/store'
 import {fetchConfiguration} from './src/store/configuration/configuration.thunks'
 import {fetchFavorites} from './src/store/entities/favorites/favorites.thunks'
-import TabNavigator from './src/navigation/TabNavigator'
 import {StatusBar} from 'react-native'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
+import {NavigationContainer} from '@react-navigation/native'
+import TabNavigator from './src/navigation/TabNavigator'
 
-const App = () => {
+export const App = () => {
   const dispatch = useDispatch<Dispatch>()
 
   useEffect(() => {
@@ -16,19 +18,30 @@ const App = () => {
 
   // console.log('App RENDER', {})
   return (
-    <>
-      <StatusBar
-        barStyle="dark-content"
-        animated={true}
-        translucent={true}
-        backgroundColor="transparent"
-      />
-      <TabNavigator />
-    </>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <StatusBar
+          barStyle="dark-content"
+          animated={true}
+          translucent={true}
+          backgroundColor="transparent"
+        />
+        <TabNavigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
   )
 }
 
-export default App
+const RootApp = () => {
+  return (
+    // <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+    // </React.StrictMode>
+  )
+}
+export default RootApp
 /*
        Лого                  поиск
 

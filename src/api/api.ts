@@ -1,34 +1,18 @@
-import axios, {AxiosError} from 'axios'
-import Config from 'react-native-config'
+import axios from 'axios'
+import {ENV} from '../constants/env'
+import {BASE_URL, LANGUAGES} from '../constants/api'
+import {setupMockingServer} from '../utils/setupMockingServer'
+import {fetchGenresApiHandler} from './genres/__mock__/genres.mockHandlers'
 
-export type DefaultErrorDataType = {
-  details?: string[]
-  error?: string
-  localized_error?: string
-}
-export type ResponseError<ErrorDataType = DefaultErrorDataType | string> =
-  AxiosError<ErrorDataType> & {error: true}
-
-export const BASE_URL = 'https://api.themoviedb.org/3'
-
-export enum LANGUAGES {
-  RU = 'ru',
-  EN = 'en',
-  NULL = 'null',
-}
-export const DEFAULT_INCLUDE_LANGUAGE_PARAM = `${LANGUAGES.RU},${LANGUAGES.EN},${LANGUAGES.NULL}`
-
-export enum SORT_BY_PARAM {
-  POPULARITY_ASC = 'popularity.asc',
-  POPULARITY_DESC = 'popularity.desc',
-  VOTE_AVERAGE_ASC = 'vote_average.asc',
-  VOTE_AVERAGE_DESC = 'vote_average.desc',
-}
+export const mockServer = setupMockingServer({
+  enabled: ENV.MOCK_ENABLE,
+  handlers: [fetchGenresApiHandler],
+})
 
 export const appAxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: 'Bearer ' + Config.V4_API_KEY,
+    Authorization: 'Bearer ' + ENV.V4_API_KEY,
     'Content-Type': 'application/json;charset=utf-8',
   },
 })

@@ -12,7 +12,13 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "reboot android": "adb reboot",
     "clean android": "cd android && ./gradlew clean",
-    "clean and install ios": "cd ios && pod cache clean --all && pod install"
+    "clean and install ios": "cd ios && pod cache clean --all && pod install",
+    "e2e:android:build": "detox build -c android.emu.release",
+    "e2e:android:test": "emulator @Pixel_API_31_AOSP -no-audio -no-boot-anim & sleep 3 && detox test -c android.emu.release --cleanup",
+    "e2e:android": "npm run e2e:android:build && npm run e2e:android:test",
+    "e2e:ios:build": "detox build -c ios.sim.debug",
+    "e2e:ios:test": "detox test -c ios.sim.debug",
+    "e2e:ios": "npm run e2e:ios:build && npm run e2e:ios:test"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.16.0",
@@ -20,6 +26,7 @@
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
     "@reduxjs/toolkit": "^1.7.2",
+    "@types/react": "^17",
     "axios": "^0.25.0",
     "date-fns": "^2.28.0",
     "lodash": "^4.17.21",
@@ -39,16 +46,24 @@
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
-    "@types/jest": "^26.0.23",
+    "@testing-library/jest-native": "^5.0.0",
+    "@testing-library/react-native": "^11.2.0",
+    "@types/detox": "^18.1.0",
+    "@types/jest": "^27.2.5",
     "@types/react-native": "^0.66.15",
     "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
     "babel-jest": "^26.6.3",
+    "detox": "^19.12.5",
+    "dotenv": "^16.0.3",
     "eslint": "^7.14.0",
-    "jest": "^26.6.3",
+    "eslint-plugin-testing-library": "^5.7.2",
+    "jest": "^27.2.5",
     "metro-react-native-babel-preset": "^0.66.2",
+    "msw": "^0.47.4",
     "react-native-svg-transformer": "^1.0.0",
+    "react-native-url-polyfill": "^1.3.0",
     "react-test-renderer": "17.0.2",
     "typescript": "^4.4.4"
   },
@@ -65,6 +80,19 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|react-native-flipper|react-native-safe-area-context|@react-navigation|@react-native(-community)?)/)"
+    ],
+    "setupFiles": [
+      "<rootDir>/__mocks__/react-native-safe-area-context/setup.js",
+      "<rootDir>/__mocks__/react-navigation/setup.js"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
+    "moduleNameMapper": {
+      "\\.svg": "<rootDir>/__mocks__/react-native-svg-transformer/index.ts"
+    }
   }
 }
