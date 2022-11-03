@@ -1,15 +1,14 @@
-import {Duration, intervalToDuration} from 'date-fns'
+import {Duration, intervalToDuration, isValid} from 'date-fns'
 
-export type DateParam = Date | string | undefined | null
+export type DateParam = Date | number | string | undefined | null
 
-export const checkIsDateValid = (date: Date) => !isNaN(date.getTime())
+export const checkIsDateValid = (date: Date) => isValid(date)
 
 export const getValidDateObject = (date: DateParam): Date | undefined => {
-  if (!date) return
-  date = typeof date === 'string' ? new Date(date) : date
+  if (date === undefined || date === null) return
+  date = date instanceof Date ? date : new Date(date)
 
-  if (!date || !checkIsDateValid(date)) return
-  return date
+  return checkIsDateValid(date) ? date : undefined
 }
 
 /** Date format dd*/
