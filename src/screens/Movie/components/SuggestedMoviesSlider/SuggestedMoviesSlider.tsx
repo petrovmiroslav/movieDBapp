@@ -12,16 +12,14 @@ import {
   useFetchDataList,
   UseFetchDataListParams,
 } from '../../../../hooks/useFetchData'
-import {
-  EntitiesActionPayload,
-  EntitiesIds,
-} from '../../../../store/entities/entities.types'
+import {EntitiesIds} from '../../../../store/entities/entities.types'
 import {getEntityId} from '../../../../utils/store'
 import {
   FetchRecommendationsMoviesApiParams,
   FetchSimilarMoviesApiParams,
 } from '../../../../api/movies/movies.types'
-import {ResponseError} from '../../../../api/api.types'
+import {fetchRecommendationsMovies} from '../../../../store/entities/movies/movies.thunks'
+import {isErrorWithMessage} from '../../../../utils/errors'
 
 export type SuggestedMoviesSliderProps = {
   movieId: MovieId
@@ -30,7 +28,7 @@ export type SuggestedMoviesSliderProps = {
     params: FetchRecommendationsMoviesApiParams | FetchSimilarMoviesApiParams,
   ) => (
     dispatch: Dispatch,
-  ) => Promise<EntitiesActionPayload<'movies'> | ResponseError | undefined>
+  ) => ReturnType<ReturnType<typeof fetchRecommendationsMovies>>
 } & Pick<MoviesSliderProps, 'onMovieButtonPress'>
 const SuggestedMoviesSlider = ({
   movieId,
@@ -45,8 +43,10 @@ const SuggestedMoviesSlider = ({
   >(
     async page => {
       const res = await dispatch(apiFunc({movieId, page}))
-      const movies = res && 'entities' in res ? res.entities.movies : undefined
-      if (!movies) return
+
+      if (isErrorWithMessage(res)) return
+
+      const movies = res.entities.movies
       return movies.map(getEntityId)
     },
     [apiFunc, dispatch, movieId],

@@ -1,16 +1,12 @@
 import {Dispatch} from '../store'
 import {fetchConfigurationApi} from '../../api/configuration/configuration.requests'
 import {loadConfigurationSuccess} from './configuration.slice'
-import {ResponseError} from '../../api/api.types'
+import {withResponseErrorCatcher} from '../../utils/errors'
 
-export const fetchConfiguration = async (dispatch: Dispatch) => {
-  try {
+export const fetchConfiguration = withResponseErrorCatcher(
+  async (dispatch: Dispatch) => {
     const res = await fetchConfigurationApi()
     dispatch(loadConfigurationSuccess(res))
-  } catch (e) {
-    const responseError = e as ResponseError
-    responseError.error = true
-    console.error('Error: fetchConfigurationApi', {responseError})
-    return responseError
-  }
-}
+  },
+  'fetchConfigurationApi',
+)

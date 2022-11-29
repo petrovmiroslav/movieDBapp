@@ -26,111 +26,62 @@ import {
   FetchTopRatedMoviesApiParam,
   SearchMoviesApiParams,
 } from '../../../api/movies/movies.types'
-import {ResponseError} from '../../../api/api.types'
+import {withResponseErrorCatcher} from '../../../utils/errors'
 
-export const fetchMovie =
-  (params: FetchMovieApiParams) => async (dispatch: Dispatch) => {
-    try {
-      const res = await fetchMovieApi(params)
+export const fetchMovie = (params: FetchMovieApiParams) =>
+  withResponseErrorCatcher(async (dispatch: Dispatch) => {
+    const res = await fetchMovieApi(params)
 
-      dispatch(fetchMoviesSuccess(res))
-    } catch (e) {
-      const responseError = e as ResponseError
-      responseError.error = true
-      console.error('Error: fetchMovieApi', {responseError})
-      return responseError
-    }
-  }
+    dispatch(fetchMoviesSuccess(res))
+  }, 'fetchMovieApi')
 
-export const discoverMovie =
-  (params: DiscoverMovieApiParams) => async (dispatch: Dispatch) => {
-    try {
-      const actionPayload = await discoverMovieApi(params)
+export const discoverMovie = (params: DiscoverMovieApiParams) =>
+  withResponseErrorCatcher(async (dispatch: Dispatch) => {
+    const actionPayload = await discoverMovieApi(params)
 
-      actionPayload && dispatch(fetchDiscoverMovieSuccess(actionPayload))
-      return actionPayload
-    } catch (e) {
-      const responseError = e as ResponseError
-      responseError.error = true
-      console.error('Error: discoverMovieApi', {responseError})
-      return responseError
-    }
-  }
+    actionPayload && dispatch(fetchDiscoverMovieSuccess(actionPayload))
+    return actionPayload
+  }, 'discoverMovieApi')
 
-export const fetchRecommendationsMovies =
-  (params: FetchRecommendationsMoviesApiParams) =>
-  async (dispatch: Dispatch) => {
-    try {
-      const actionPayload = await fetchRecommendationsMoviesApi(params)
+export const fetchRecommendationsMovies = (
+  params: FetchRecommendationsMoviesApiParams,
+) =>
+  withResponseErrorCatcher(async (dispatch: Dispatch) => {
+    const actionPayload = await fetchRecommendationsMoviesApi(params)
 
-      actionPayload &&
-        dispatch(fetchRecommendationsMoviesSuccess(actionPayload))
-      return actionPayload
-    } catch (e) {
-      const responseError = e as ResponseError
-      responseError.error = true
-      console.error('Error: fetchRecommendationsMoviesAPi', {responseError})
-      return responseError
-    }
-  }
+    actionPayload && dispatch(fetchRecommendationsMoviesSuccess(actionPayload))
+    return actionPayload
+  }, 'fetchRecommendationsMoviesApi')
 
-export const fetchSimilarMovies =
-  (params: FetchSimilarMoviesApiParams) => async (dispatch: Dispatch) => {
-    try {
-      const actionPayload = await fetchSimilarMoviesApi(params)
+export const fetchSimilarMovies = (params: FetchSimilarMoviesApiParams) =>
+  withResponseErrorCatcher(async (dispatch: Dispatch) => {
+    const actionPayload = await fetchSimilarMoviesApi(params)
 
-      actionPayload && dispatch(fetchSimilarMoviesSuccess(actionPayload))
-      return actionPayload
-    } catch (e) {
-      const responseError = e as ResponseError
-      responseError.error = true
-      console.error('Error: fetchSimilarMoviesAPi', {responseError})
-      return responseError
-    }
-  }
+    actionPayload && dispatch(fetchSimilarMoviesSuccess(actionPayload))
+    return actionPayload
+  }, 'fetchSimilarMoviesAPi')
 
-export const fetchPopularMovies =
-  (params: FetchPopularMoviesApiParam) => async (dispatch: Dispatch) => {
-    try {
-      const actionPayload = await fetchPopularMoviesApi(params)
+export const fetchPopularMovies = (params: FetchPopularMoviesApiParam) =>
+  withResponseErrorCatcher(async (dispatch: Dispatch) => {
+    const actionPayload = await fetchPopularMoviesApi(params)
 
-      actionPayload && dispatch(fetchPopularMoviesSuccess(actionPayload))
-      return actionPayload
-    } catch (e) {
-      const responseError = e as ResponseError
-      responseError.error = true
-      console.error('Error: fetchPopularMoviesApi', {responseError})
-      return responseError
-    }
-  }
+    actionPayload && dispatch(fetchPopularMoviesSuccess(actionPayload))
+    return actionPayload
+  }, 'fetchPopularMoviesApi')
 
-export const fetchTopRatedMovies =
-  (params: FetchTopRatedMoviesApiParam) => async (dispatch: Dispatch) => {
-    try {
-      const actionPayload = await fetchTopRatedMoviesApi(params)
+export const fetchTopRatedMovies = (params: FetchTopRatedMoviesApiParam) =>
+  withResponseErrorCatcher(async (dispatch: Dispatch) => {
+    const actionPayload = await fetchTopRatedMoviesApi(params)
 
-      actionPayload && dispatch(fetchTopRatedMoviesSuccess(actionPayload))
-      return actionPayload
-    } catch (e) {
-      const responseError = e as ResponseError
-      responseError.error = true
-      console.error('Error: fetchTopRatedMoviesApi', {responseError})
-      return responseError
-    }
-  }
+    actionPayload && dispatch(fetchTopRatedMoviesSuccess(actionPayload))
+    return actionPayload
+  }, 'fetchTopRatedMoviesApi')
 
-export const searchMovies =
-  (params: SearchMoviesApiParams) => async (dispatch: Dispatch) => {
-    try {
-      if (!params.query) return
-      const actionPayload = await searchMoviesApi(params)
+export const searchMovies = (params: SearchMoviesApiParams) =>
+  withResponseErrorCatcher(async (dispatch: Dispatch) => {
+    if (!params.query) return
+    const actionPayload = await searchMoviesApi(params)
 
-      actionPayload && dispatch(fetchSearchMoviesSuccess(actionPayload))
-      return actionPayload
-    } catch (e) {
-      const responseError = e as ResponseError
-      responseError.error = true
-      console.error('Error: searchMoviesApi', {responseError})
-      return responseError
-    }
-  }
+    actionPayload && dispatch(fetchSearchMoviesSuccess(actionPayload))
+    return actionPayload
+  }, 'searchMoviesApi')

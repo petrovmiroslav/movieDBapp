@@ -10,21 +10,16 @@ import {
   useFetchDataList,
   UseFetchDataListParams,
 } from '../../../../hooks/useFetchData'
-import {
-  EntitiesActionPayload,
-  EntitiesIds,
-} from '../../../../store/entities/entities.types'
+import {EntitiesIds} from '../../../../store/entities/entities.types'
 import {getEntityId} from '../../../../utils/store'
 import {PaginationApiParams} from '../../../../api/pagination/pagination.types'
-import {ResponseError} from '../../../../api/api.types'
+import {fetchPopularMovies} from '../../../../store/entities/movies/movies.thunks'
 
 export type ChartMoviesSliderProps = {
   headerText: string
   apiFunc: (
     params: PaginationApiParams,
-  ) => (
-    dispatch: Dispatch,
-  ) => Promise<EntitiesActionPayload<'movies'> | ResponseError | undefined>
+  ) => (dispatch: Dispatch) => ReturnType<ReturnType<typeof fetchPopularMovies>>
 } & Pick<
   MoviesSliderProps,
   'onMovieButtonPress' | 'movieCardTestID' | 'movieTitleTestID'
