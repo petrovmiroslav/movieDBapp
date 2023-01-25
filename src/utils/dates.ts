@@ -65,13 +65,10 @@ export const convertMinutesToDuration = (minutes: number): Duration => {
   })
 }
 
-/** Duration format 1 ч. 28 мин.*/
+/** Duration format 1 h 28 m*/
 export const formatDurationToString = (duration: Duration): string => {
   const {hours, minutes} = duration
-  const stringArr = [
-    hours ? hours + ' ч.' : '',
-    minutes ? minutes + ' мин.' : '',
-  ]
+  const stringArr = [hours ? hours + ' h' : '', minutes ? minutes + ' m' : '']
   return stringArr.join(' ').trim()
 }
 

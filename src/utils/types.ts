@@ -4,7 +4,7 @@ export type Brand<T, U> = T & {__brand: U}
 
 export type StringDate = Brand<string, 'StringDate'>
 
-/**Для избежания потери generic type в React.memo*/
+/** prevents from losing generic types in React.memo*/
 interface GenericTypedMemo {
   <T>(fn: T): T
 }

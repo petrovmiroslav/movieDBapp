@@ -15,16 +15,16 @@ export const moviesSelectors = moviesAdapter.getSelectors(
 )
 
 export const {
-  /** Возвращает Movie по Id*/
+  /** returns Movie by Id*/
   byIdSelector: movieByIdSelector,
   selectById: selectMovieById,
-  /** Возвращает список всех Movie*/
+  /** returns list of all Movie*/
   allListSelector: allMoviesListSelector,
-  /** Возвращает словарь всех Movie*/
+  /** returns dict of all Movie*/
   allEntitiesSelector: allMoviesEntitiesSelector,
 } = createEntityReSelectors(moviesSelectors)
 
-/** Возвращает только примитивные значения Movie по MovieId*/
+/** returns only primitive values Movie by MovieId*/
 const moviePrimitiveValuesByIdSelector = (() => {
   const selector = createCachedSelector(
     [

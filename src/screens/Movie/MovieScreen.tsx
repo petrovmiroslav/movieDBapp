@@ -95,13 +95,13 @@ const MovieScreen = () => {
 
                 <RecommendationsMoviesSlider
                   movieId={movieId}
-                  headerText="Рекомендации"
+                  headerText="Recommendations"
                   apiFunc={fetchRecommendationsMovies}
                   onMovieButtonPress={onSuggestedMovieButtonPress}
                 />
                 <RecommendationsMoviesSlider
                   movieId={movieId}
-                  headerText="Похожие"
+                  headerText="Similar"
                   apiFunc={fetchSimilarMovies}
                   onMovieButtonPress={onSuggestedMovieButtonPress}
                 />

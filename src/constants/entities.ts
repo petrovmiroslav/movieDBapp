@@ -11,7 +11,7 @@ export const entitiesNamesSingularDictionary = {
   favorite: 'favorite',
 } as const
 
-// Имена сущностей в ед. числе в виде: { movie: 'movie' }
+// Entities names. Singular. { movie: 'movie' }
 export const ENTITIES_NAMES_SINGULAR =
   entitiesNamesSingularDictionary as EntitiesNamesSingular
 
@@ -22,7 +22,7 @@ export const entitiesNamesPluralDictionary = {
   [ENTITIES_NAMES_SINGULAR.favorite]: 'favorites',
 } as const
 
-// Имена сущностей во мн. числе в виде: { movies: 'movies' }
+// Entities names. Plural. { movies: 'movies' }
 export const ENTITIES_NAMES_PLURAL = Object.fromEntries(
   Object.values(entitiesNamesPluralDictionary).map(value => [value, value]),
 ) as EntitiesNamesPlural
@@ -34,7 +34,7 @@ export const entitiesIdsNamesDictionary = {
   [ENTITIES_NAMES_SINGULAR.favorite]: 'favoriteId',
 } as const
 
-// Имена Id сущностей в ед. числе в виде: { movieId: 'movieId' }
+// Entities ids names. Singular { movieId: 'movieId' }
 export const ENTITIES_IDS_NAMES = Object.fromEntries(
   Object.entries(ENTITIES_NAMES_SINGULAR).map(value => [
     value[0] + 'Id',

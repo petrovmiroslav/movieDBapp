@@ -17,8 +17,8 @@ import {EntitiesIds} from '../../store/entities/entities.types'
 import {styleSheetCompose} from '../../utils/styles'
 
 export const ACCESSIBILITY_ROLE = 'togglebutton'
-export const DEFAULT_ADD_TO_FAVORITES_LABEL_TEXT = 'Добавить в избранное'
-export const DEFAULT_REMOVE_FROM_FAVORITES_LABEL_TEXT = 'Удалить из избранного'
+export const DEFAULT_ADD_TO_FAVORITES_LABEL_TEXT = 'Add to favorites'
+export const DEFAULT_REMOVE_FROM_FAVORITES_LABEL_TEXT = 'Remove from favorites'
 export const EMPTY_ICON_TEST_ID = 'FavoriteButton__EMPTY_ICON_TEST_ID'
 export const FILLED_ICON_TEST_ID = 'FavoriteButton__FILLED_ICON_TEST_ID'
 

@@ -37,7 +37,7 @@ const MovieImagesSlider = ({
   })
 
   const headerText = useMemo(
-    () => (imageType === IMAGE_TYPES.POSTERS ? 'Постеры' : 'Кадры'),
+    () => (imageType === IMAGE_TYPES.POSTERS ? 'Posters' : 'Backdrops'),
     [imageType],
   )
 

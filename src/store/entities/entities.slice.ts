@@ -13,7 +13,7 @@ export const entitiesSlices = {
   [ENTITIES_NAMES_PLURAL.favorites]: favoritesSlice,
 } as const
 
-// для сортировки имен слайсов по алфавиту
+// sorts slice names
 export const sortedEntitiesReducersNamesList = Object.keys(
   entitiesSlices,
 ).sort() as (keyof typeof entitiesSlices)[]

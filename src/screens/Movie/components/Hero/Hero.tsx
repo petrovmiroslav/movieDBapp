@@ -80,7 +80,7 @@ const Hero = ({movieId, screenScrollYAnimValue}: HeroProps) => {
     [backdropPath, baseUrl, sizePart],
   )
 
-  /** При скролле поднимает heroImageContainer на значение скролла * 0.5*/
+  /** lifts heroImageContainer on scroll value * 0.5*/
   const heroImageContainerStyle = useMemo(
     () => ({
       transform: [
@@ -99,7 +99,7 @@ const Hero = ({movieId, screenScrollYAnimValue}: HeroProps) => {
     [screenScrollYAnimValue],
   )
 
-  /** При скролле увеличивает или сжимает heroImage*/
+  /** scales heroImage on scroll*/
   const heroImageStyle = useMemo(
     () => ({
       transform: [

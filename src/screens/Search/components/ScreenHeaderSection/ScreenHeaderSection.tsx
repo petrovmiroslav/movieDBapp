@@ -115,11 +115,11 @@ const ScreenHeaderSection = ({
           value={searchInputValue}
           onChangeText={onSearchInputChangeTextHandler}
           style={styles.input}
-          placeholder="Поиск"
+          placeholder="Search"
           onFocus={onSearchInputFocusHandler}
           onBlur={onSearchInputBlurHandler}
           testID={SEARCH_INPUT_TEST_ID}
-          accessibilityLabel="Поиск"
+          accessibilityLabel="Search"
         />
         <Svg
           style={styles.icon}
@@ -140,7 +140,7 @@ const ScreenHeaderSection = ({
           style={styles.cancelButton__text}
           ellipsizeMode="clip"
           numberOfLines={1}>
-          Отменить
+          Cancel
         </Text>
       </Button>
     </ScreenHeaderLayout>

@@ -20,7 +20,7 @@ export enum SORT_BY_PARAM_VALUES {
 
 export const BASE_URL = 'https://api.themoviedb.org/3'
 
-export const DEFAULT_INCLUDE_LANGUAGE_PARAM = `${LANGUAGES.RU},${LANGUAGES.EN},${LANGUAGES.NULL}`
+export const DEFAULT_INCLUDE_LANGUAGE_PARAM = `${LANGUAGES.EN},${LANGUAGES.NULL}`
 
 export const PATH_GETTERS = {
   /** genres*/

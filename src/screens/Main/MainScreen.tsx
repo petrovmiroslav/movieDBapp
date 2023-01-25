@@ -73,14 +73,14 @@ const MainScreen = () => {
           onScroll={onScreenScrollHandler}
           scrollEventThrottle={1}>
           <ChartMoviesSlider
-            headerText="Популярные"
+            headerText="Popular"
             onMovieButtonPress={onChartMovieButtonPress}
             apiFunc={fetchPopularMovies}
             movieCardTestID={POPULAR_MOVIE_CARD_TEST_ID}
             movieTitleTestID={POPULAR_MOVIE_CARD_TITLE_TEST_ID}
           />
           <ChartMoviesSlider
-            headerText="Топ рейтинг"
+            headerText="Top rating"
             apiFunc={fetchTopRatedMovies}
             onMovieButtonPress={onChartMovieButtonPress}
           />

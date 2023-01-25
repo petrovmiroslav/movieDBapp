@@ -1,6 +1,6 @@
 import {roundTo} from './numbers'
 
-/** округляет рейтинг до 1 знака после запятой*/
+/** round rating to 1 digit after point*/
 export const getRoundedVote = (vote: number): string =>
   roundTo(vote, 1).toFixed(1)
 

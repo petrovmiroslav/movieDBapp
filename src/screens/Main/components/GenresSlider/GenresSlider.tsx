@@ -35,7 +35,7 @@ const GenresSlider = ({onButtonPress}: GenresSliderProps) => {
 
   return (
     <>
-      <SectionHeader style={styles.header}>Жанры</SectionHeader>
+      <SectionHeader style={styles.header}>Genres</SectionHeader>
       <FlatList
         style={styles.slider}
         contentContainerStyle={styles.screenHeaderLayoutContentContainer}

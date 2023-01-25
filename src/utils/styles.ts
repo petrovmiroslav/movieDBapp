@@ -1,6 +1,6 @@
 import {StyleProp, StyleSheet} from 'react-native'
 
-/** Для избежания ошибки typescript о передаче объектов с разными полями*/
+/** fix StyleSheet.compose types */
 export const styleSheetCompose = StyleSheet.compose as <T, U>(
   style1: StyleProp<T> | Array<StyleProp<T>>,
   style2: StyleProp<U> | Array<StyleProp<U>>,

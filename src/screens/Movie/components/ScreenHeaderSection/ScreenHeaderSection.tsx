@@ -46,7 +46,7 @@ const ScreenHeaderSection = ({
     [headerOpacityAnimValue],
   )
 
-  /** при изменении opacity ScreenHeader изменяет statusBarStyle*/
+  /** changes statusBarStyle if ScreenHeader opacity changes */
   useEffect(() => {
     const listener = headerOpacityAnimValue.addListener(value => {
       if (value.value && statusBarStyle === 'dark-content') return

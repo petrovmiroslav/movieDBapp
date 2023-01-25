@@ -4,7 +4,7 @@ import {Entities} from '../store/entities/entities.types'
 import {Primitive} from './types'
 
 /**
- * Возвращает строку состоящую из строковых значений всех переданных аргументов
+ * returns a string consist of string values of all passed arguments
  */
 export const getValidSelectorCacheKey = (...args: any[]): string => {
   let validCacheKey = ''
@@ -15,7 +15,7 @@ export const getValidSelectorCacheKey = (...args: any[]): string => {
 }
 
 /**
- * Возвращает функцию оборачивающую вызов .selectById(), что бы отбросить неиспользуемые параметры
+ * returns a function to ignore unused params
  */
 export const createEntityByIdSelector = <
   Entity extends Entities[keyof Entities],
@@ -29,7 +29,7 @@ export const createEntityByIdSelector = <
 }
 
 /**
- * Возвращает функцию для использования переданного селектора в хуке useSelector
+ * returns a function to use a passed selector in useSelector
  */
 export const createSelectEntityByIdFunc = <
   Entity extends Entities[keyof Entities],
@@ -44,8 +44,7 @@ export const createSelectEntityByIdFunc = <
 }
 
 /**
- * Создает реселект вызывающий переданный .selectAll() и возвращает функцию,
- * оборачивающую вызов реселекта, что бы отбросить неиспользуемые параметры
+ * crates a reselect to ignore unused params
  */
 export const createAllEntitiesListSelector = <
   Entity extends Entities[keyof Entities],
@@ -64,8 +63,7 @@ export const createAllEntitiesListSelector = <
 }
 
 /**
- * Создает реселект вызывающий переданный .selectEntities() и возвращает функцию,
- * оборачивающую вызов реселекта, что бы отбросить неиспользуемые параметры
+ * crates a reselect to ignore unused params
  */
 export const createAllEntitiesSelector = <
   Entity extends Entities[keyof Entities],

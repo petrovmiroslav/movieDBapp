@@ -11,13 +11,13 @@ import {
 import {Favorite} from './favorites/favorites.types'
 import {EntityId} from '@reduxjs/toolkit'
 
-// входная точка для добавления нового слайса сущности
-// сущность должна иметь поле id!
-// при изменении необходимо также обновить:
-// 1. entitiesNamesSingularDictionary
-// 2. entitiesNamesPluralDictionary
-// 3. entitiesIdsNamesDictionary
-// 4. entitiesSlices
+/** the entry point for adding a new entity slice
+An entity has to have id.
+ Editing it, you have to update:
+1. entitiesNamesSingularDictionary
+2. entitiesNamesPluralDictionary
+3. entitiesIdsNamesDictionary
+4. entitiesSlices **/
 export type Entities = {
   movie: Movie
   genre: Genre
@@ -29,7 +29,7 @@ export type EntitiesNamesSingular = {
   [key in keyof Entities]: typeof entitiesNamesSingularDictionary[key]
 }
 
-// для получения из имени сущности во мн. числе имя сущности в ед. числе
+// to get singular entity name by plural
 export type EntitiesNamesSingularByPlural = {
   [key in keyof Entities as typeof entitiesNamesPluralDictionary[key]]: key
 }
@@ -42,12 +42,12 @@ export type EntitiesIdsNames = {
   [key in keyof typeof ENTITIES_NAMES_SINGULAR as `${key}Id`]: typeof entitiesIdsNamesDictionary[key]
 }
 
-// типы Id сущностей
+// entities ids
 export type EntitiesIds = {
   [key in keyof Entities]: PickEntityIdType<Entities[key]>
 }
 
-// типы Id сущностей в виде: { movieId: MovieId }
+// entities' ids { movieId: MovieId }
 export type EntitiesIdsDictionary = {
   [key in keyof Entities as typeof entitiesIdsNamesDictionary[key]]?: EntitiesIds[key]
 }

@@ -22,7 +22,7 @@ appAxiosInstance.interceptors.request.use(config => {
     config.params = {}
   }
   if (!config.params.language) {
-    config.params.language = LANGUAGES.RU
+    config.params.language = LANGUAGES.EN
   }
 
   return config

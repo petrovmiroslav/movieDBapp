@@ -15,16 +15,16 @@ export const genresSelectors = genresAdapter.getSelectors(
 )
 
 export const {
-  /** Возвращает Genre по Id*/
+  /** returns Genre by Id*/
   byIdSelector: genreByIdSelector,
   selectById: selectGenreById,
-  /** Возвращает список всех Genre*/
+  /** returns list of all Genre*/
   allListSelector: allGenresListSelector,
-  /** Возвращает словарь всех Genre*/
+  /** returns dict of all Genre*/
   allEntitiesSelector: allGenreEntitiesSelector,
 } = createEntityReSelectors(genresSelectors)
 
-/** Возвращает список GenreId жанров по MovieId*/
+/** returns list of GenreId by MovieId*/
 const genreIdsListByMovieIdSelector = (() => {
   const selector = createCachedSelector(
     [
@@ -46,7 +46,7 @@ export const selectGenreIdsListByMovieId =
   (movieId: MovieIdParam) => (state: State) =>
     genreIdsListByMovieIdSelector(state, movieId)
 
-/** Возвращает список имен жанров по MovieId*/
+/** returns list of genres names by MovieId*/
 const genreNamesListByMovieIdSelector = (() => {
   const selector = createCachedSelector(
     [
@@ -71,7 +71,7 @@ export const selectGenreNamesListByMovieId =
   (movieId: MovieIdParam) => (state: State) =>
     genreNamesListByMovieIdSelector(state, movieId)
 
-/** Возвращает список Genre отсортированный по name*/
+/** returns list Genre sorted by name*/
 const genresListSortedByNameSelector = (() => {
   const selector = createSelector(
     [
@@ -93,7 +93,7 @@ const genresListSortedByNameSelector = (() => {
   return (state: State) => selector(state)
 })()
 
-/** Возвращает список GenreId отсортированный по name*/
+/** returns list of GenreId sorted by name*/
 export const genreIdsListSortedByNameSelector = (() => {
   const selector = createSelector(
     [

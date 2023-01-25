@@ -18,7 +18,7 @@ import {RANDOM_ENTITY_ID_SIZE} from '../constants/entities'
 export const getRandomId = (size: number = RANDOM_ENTITY_ID_SIZE) =>
   nanoid(size)
 
-//извлекает EntityId
+// get EntityId
 export const getEntityId = <Entity extends Entities[keyof Entities]>(
   entity: Entity,
 ): PickEntityIdType<Entity> => entity.id

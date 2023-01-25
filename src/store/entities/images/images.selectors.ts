@@ -16,16 +16,16 @@ export const imagesSelectors = imagesAdapter.getSelectors(
 )
 
 export const {
-  /** Возвращает Image по Id*/
+  /** return Image by Id*/
   byIdSelector: imageByIdSelector,
   selectById: selectImageById,
-  /** Возвращает список всех Image*/
+  /** return list of all Image*/
   allListSelector: allImagesListSelector,
-  /** Возвращает словарь всех Image*/
+  /** return dict of all Image*/
   allEntitiesSelector: allImagesEntitiesSelector,
 } = createEntityReSelectors(imagesSelectors)
 
-/** Возвращает список ImageId Movie по MovieId*/
+/** return list of ImageId Movie by MovieId*/
 export const imageIdsListByMovieIdSelector = (() => {
   const selector = createCachedSelector(
     [
@@ -47,7 +47,7 @@ export const selectImageIdsListByMovieId =
   (movieId: MovieIdParam) => (state: State) =>
     imageIdsListByMovieIdSelector(state, movieId)
 
-/** Возвращает список Image по MovieId и ImageTypeParam*/
+/** return list of Image by MovieId and ImageTypeParam*/
 const imagesListByMovieIdSelector = (() => {
   const selector = createCachedSelector(
     [
@@ -78,7 +78,7 @@ const imagesListByMovieIdSelector = (() => {
     selector(state, movieId, type)
 })()
 
-/** Возвращает список ImageId по MovieId и ImageTypeParam*/
+/** return list of ImageId by MovieId and ImageTypeParam*/
 const imagesIdsListByMovieIdSelector = (() => {
   const selector = createCachedSelector(
     [

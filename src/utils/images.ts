@@ -1,7 +1,7 @@
 import {WINDOW} from '../constants/styles'
 import {DEFAULT_IMAGE_SIZE} from '../store/configuration/configuration.slice'
 
-/** Возвращает первый размер из списка sizesList который больше width*/
+/** returns the first size in the list, bigger than width */
 export const getOptimalImageWidth = (
   sizesList: string[] | undefined,
   width: number = WINDOW.width,

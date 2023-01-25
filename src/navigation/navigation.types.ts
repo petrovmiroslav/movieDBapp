@@ -8,11 +8,11 @@ export enum TABS {
 }
 
 export enum SCREENS {
-  MAIN = 'Главная',
-  SEARCH = 'Поиск',
-  FAVORITES = 'Избранное',
-  MOVIE = 'Фильм',
-  GENRE_MOVIES = 'Жанр',
+  MAIN = 'Home',
+  SEARCH = 'Search',
+  FAVORITES = 'Favorites',
+  MOVIE = 'Movie',
+  GENRE_MOVIES = 'Genre',
 }
 
 export type StackParamList = {

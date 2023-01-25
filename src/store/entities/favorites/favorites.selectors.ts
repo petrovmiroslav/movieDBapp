@@ -20,16 +20,16 @@ export const favoritesSelectors = favoritesAdapter.getSelectors(
 )
 
 export const {
-  /** Возвращает Favorite по Id*/
+  /** returns Favorite by Id*/
   byIdSelector: favoriteByIdSelector,
   selectById: selectFavoriteById,
-  /** Возвращает список всех Favorite*/
+  /** returns list of all Favorite*/
   allListSelector: allFavoritesListSelector,
-  /** Возвращает словарь всех Favorite*/
+  /** returns dict of all Favorite*/
   allEntitiesSelector: allFavoritesEntitiesSelector,
 } = createEntityReSelectors(favoritesSelectors)
 
-/** Возвращает список Favorite по type*/
+/** returns list of Favorite by type*/
 export const favoritesListByTypeSelector = (() => {
   const selector = createCachedSelector(
     [
@@ -64,7 +64,7 @@ export const favoritesListByTypeSelector = (() => {
   return (state: State, type: FavoriteTypeParam) => selector(state, type)
 })()
 
-/** Возвращает список FavoriteId по type*/
+/** returns list of FavoriteId by type*/
 export const favoriteIdsListByTypeSelector = (() => {
   const selector = createCachedSelector(
     [
@@ -85,7 +85,7 @@ export const selectFavoriteIdsListByType =
   (type?: FavoriteTypeParam) => (state: State) =>
     favoriteIdsListByTypeSelector(state, type)
 
-/** Возвращает FavoriteDictionary по type*/
+/** returns FavoriteDictionary by type*/
 export const favoriteDictionaryByTypeSelector = (() => {
   const selector = createCachedSelector(
     [
@@ -112,7 +112,7 @@ export const selectFavoriteDictionaryByType =
   (type?: FavoriteTypeParam) => (state: State) =>
     favoriteDictionaryByTypeSelector(state, type)
 
-/** Возвращает FavoriteId по type и EntityId*/
+/** returns FavoriteId by type and EntityId*/
 export const favoriteIdByTypeAndEntityIdSelector = (() => {
   const selector = createCachedSelector(
     [
