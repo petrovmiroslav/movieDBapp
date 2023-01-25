@@ -10,4 +10,8 @@
 - unit tests (Jest)
 - e2e tests (Detox)
 
+### Demo
+
+https://user-images.githubusercontent.com/46135319/214612969-14cc9c6e-cf34-4cb9-9d09-f1809af5d874.mp4
+
 [About me](https://petrovmiroslav.github.io/miroslavpetrov/)
